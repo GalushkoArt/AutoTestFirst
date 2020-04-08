@@ -30,12 +30,11 @@ public class OkTest extends TestBase {
         new PersonPage(driver).goToFriends();
         friends = new FriendsPage(driver).getListOfFriendsName();
         friends.get(0).click();
-        PersonPage fFriendPage = new PersonPage(driver);
-        fFriendPage.addToFriends();
-        Assertions.assertTrue(fFriendPage.isInvitedToFriends());
+        PersonPage friendPage = new PersonPage(driver);
+        friendPage.addToFriends();
+        Assertions.assertTrue(friendPage.isInvitedToFriends());
     }
 
-    //todo понять в чём проблема! Инвайт отзывается, но проверка неверная
     @Test
     public void revokeFriendship() {
         driver.navigate().refresh();

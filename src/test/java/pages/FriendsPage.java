@@ -11,15 +11,11 @@ public class FriendsPage extends HelperBase {
         super(driver);
     }
 
-    //todo настроить xpath на игнорирование Людей, которых вы можете знать
     public List<WebElement> getListOfMyFriends() {
-        return driver.findElements(By.xpath(".//*[@id=\"hook_Loader_MyFriendsSquareCardsPagingBLoader\"]//li[@class=\"ugrid_i\"]"));
+        return driver.findElements(By.xpath(".//ul[@class = \"ugrid_cnt\"]//li[@class=\"ugrid_i\"]"));
     }
 
-    //todo здесь xpath выглядит хреново
     public List<WebElement> getListOfFriendsName() {
-        return driver.findElements(By.xpath(".//*[@class=\"hookBlock\" and contains(@id, \"Friends\")]//*[@class=\"ugrid_i\"]//*[@class=\"ucard-w_t ellip-i\"]"));
+        return driver.findElements(By.xpath(".//*[@class = \"ugrid_cnt\"]//*[@class=\"ucard-w_t ellip-i\"]"));
     }
-
-
 }

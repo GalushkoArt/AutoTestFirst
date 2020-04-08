@@ -14,9 +14,8 @@ public class PersonPage extends HelperBase {
         click(friendshipButton);
     }
 
-    //todo эта штука нормально не работает после отзыва дружбы
     public boolean isInvitedToFriends() {
-        return isElementPresent(friendshipButton);
+        return isElementPresent(By.xpath(".//*[@data-l='t,invite']//*[contains(@class, 'svg-ico_check')]"));
     }
 
     public void revokeInvite() {
