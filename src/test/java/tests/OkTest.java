@@ -10,7 +10,11 @@ import pages.LoginPage;
 import pages.PersonPage;
 import pages.UserMainPage;
 
+import javax.xml.crypto.dsig.spec.ExcC14NParameterSpec;
+
 import java.util.List;
+
+import static pages.PersonFactory.getNewPersonFactory;
 
 
 public class OkTest extends TestBase {
@@ -25,14 +29,25 @@ public class OkTest extends TestBase {
         bot = BotFactory.getOkBot();
         new LoginPage(driver).logIn(bot);
         new UserMainPage(driver).goToPageFriends();
-        List<WebElement> friends = new FriendsPage(driver).getListOfMyFriends();
-        friends.get(0).click();
-        new PersonPage(driver).goToFriends();
-        friends = new FriendsPage(driver).getListOfFriendsName();
-        friends.get(0).click();
-        PersonPage friendPage = new PersonPage(driver);
+
+        clickOnFirstFriends();
+        getNewPersonFactory(driver).goToFriends();
+        clickOnFirstFriends();
+
+        PersonPage friendPage = getNewPersonFactory(driver);
         friendPage.addToFriends();
         Assertions.assertTrue(friendPage.isInvitedToFriends());
+    }
+
+    private void clickOnFirstFriends() {
+        new FriendsPage(driver).getListOfMyFriends().get(0).click();
+
+//        new FriendsPage(driver)
+//                .getListOfFriendsName()
+//                .stream()
+//                .filter() // нужно найти тег по которому отсеим себя и тех кто уже нам друг
+//                .findFirst()
+//                .isPresent;
     }
 
     @Test
@@ -40,10 +55,6 @@ public class OkTest extends TestBase {
         driver.navigate().refresh();
         PersonPage currentPage = new PersonPage(driver);
         currentPage.revokeInvite();
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException ignored) {
-        }
-        Assertions.assertFalse(currentPage.isInvitedToFriends());
+        Assertions.assertTrue(currentPage.isInvitedToFriends());
     }
 }
