@@ -3,7 +3,6 @@ package model;
 import java.util.ResourceBundle;
 
 public abstract class TestBot {
-    public final static String RESOURCE_PATH = "resources.";
     protected ResourceBundle botResource;
     protected String botName;
 

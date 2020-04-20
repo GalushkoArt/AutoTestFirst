@@ -1,60 +1,61 @@
 package tests;
 
 import model.BotFactory;
-import org.junit.jupiter.api.Assertions;
+import org.junit.After;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.WebElement;
-import pages.FriendsPage;
-import pages.LoginPage;
-import pages.PersonPage;
-import pages.UserMainPage;
+import pages.*;
 
-import javax.xml.crypto.dsig.spec.ExcC14NParameterSpec;
 
-import java.util.List;
-
-import static pages.PersonFactory.getNewPersonFactory;
+import static com.codeborne.selenide.Configuration.baseUrl;
+import static com.codeborne.selenide.Selenide.refresh;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class OkTest extends TestBase {
     @BeforeAll
     public static void initTest() {
         baseUrl = "https://ok.ru/";
-        driver.get(baseUrl);
     }
 
     @Test
     public void checkFriend() {
         bot = BotFactory.getOkBot();
-        new LoginPage(driver).logIn(bot);
-        new UserMainPage(driver).goToPageFriends();
+        new LoginPage().openHomePage();
+        PersonPage currentPage =  new LoginPage().logIn(bot)
+                .goToMenuFriends()
+                .clickOnPersonWithName("Данила", "Федоров")
+                .goToFriends()
+                .clickOnPersonWithName("Артём", "Галушко")
+                .addToFriends();
 
-        clickOnFirstFriends();
-        getNewPersonFactory(driver).goToFriends();
-        clickOnFirstFriends();
-
-        PersonPage friendPage = getNewPersonFactory(driver);
-        friendPage.addToFriends();
-        Assertions.assertTrue(friendPage.isInvitedToFriends());
+        assertFalse(currentPage.isInvitedToFriends());
+        refresh();
+        new PersonPage().revokeInvite();
     }
 
-    private void clickOnFirstFriends() {
-        new FriendsPage(driver).getListOfMyFriends().get(0).click();
-
-//        new FriendsPage(driver)
-//                .getListOfFriendsName()
-//                .stream()
-//                .filter() // нужно найти тег по которому отсеим себя и тех кто уже нам друг
-//                .findFirst()
-//                .isPresent;
+    @After
+    public void revokeInvite() {
+        //api revoking
     }
 
     @Test
     public void revokeFriendship() {
-        driver.navigate().refresh();
-        PersonPage currentPage = new PersonPage(driver);
-        currentPage.revokeInvite();
-        Assertions.assertTrue(currentPage.isInvitedToFriends());
+        PersonPage currentPage =  new PersonPage();
+        currentPage.openHomePage()
+                .goToMenuFriends()
+                .goToSentRequests()
+                .clickOnPersonWithName("technopolisBot4","technopolisBot4")
+                .revokeInvite();
+
+        assertTrue(currentPage.isInvitedToFriends());
+        refresh();
+        new PersonPage().addToFriends();
+    }
+
+    @After
+    public void restoreInvite() {
+        //api inviting
     }
 }
