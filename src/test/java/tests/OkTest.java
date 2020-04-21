@@ -20,7 +20,7 @@ public class OkTest extends TestBase {
     }
 
     @Test
-    public void checkFriend() {
+    public void friendshipInviteTest() {
         bot = BotFactory.getOkBot();
         new LoginPage().openHomePage();
         PersonPage currentPage =  new LoginPage().logIn(bot)
@@ -31,7 +31,8 @@ public class OkTest extends TestBase {
                 .addToFriends();
 
         assertFalse(currentPage.isInvitedToFriends());
-        refresh();
+
+        refresh(); //Сброс
         new PersonPage().revokeInvite();
     }
 
@@ -41,7 +42,7 @@ public class OkTest extends TestBase {
     }
 
     @Test
-    public void revokeFriendship() {
+    public void revokeFriendshipTest() {
         PersonPage currentPage =  new PersonPage();
         currentPage.openHomePage()
                 .goToMenuFriends()
@@ -50,12 +51,31 @@ public class OkTest extends TestBase {
                 .revokeInvite();
 
         assertTrue(currentPage.isInvitedToFriends());
-        refresh();
+
+        refresh(); //Сброс
         new PersonPage().addToFriends();
     }
 
     @After
     public void restoreInvite() {
         //api inviting
+    }
+
+    @Test
+    public void votingTest() {
+        GroupPage currentPage = new GroupPage().openGroupPage();
+        PostCard currentPost = PostCard.getPostWithText("Мы все умрём?");
+        currentPost.clickOnOptionWithText("Да")
+                .checkOptionWithTextClicked("Да")
+                .clickOnOptionWithText("Нет")
+                .verifyVote()
+                .checkOptionWithTextClicked("Нет");
+
+        currentPost.clickOnOptionWithText("Нет").verifyVote(); //Сброс
+    }
+
+    @After
+    public void restoreVoting() {
+        //api deselection
     }
 }

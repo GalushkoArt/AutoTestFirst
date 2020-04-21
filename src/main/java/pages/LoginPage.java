@@ -10,6 +10,12 @@ public class LoginPage extends HelperBase {
     public static final By FIELD_PASSWORD = By.cssSelector("input#field_password");
     public static final By AUTHENTICATION = By.xpath(".//input[contains(@data-l,'sign_in')]");
 
+    /**
+     * login to site with bot's data
+     * @param bot bot from BotFactory
+     * @return bot's home PersonPage
+     */
+
     public PersonPage logIn(TestBot bot) {
         type(FIELD_EMAIL, bot.getUsername());
         type(FIELD_PASSWORD, bot.getPassword());
