@@ -1,10 +1,8 @@
 package tests;
 
-import com.codeborne.selenide.Selenide;
 import model.BotFactory;
 import org.junit.After;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import pages.*;
 
@@ -14,7 +12,6 @@ import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.refresh;
-import static java.lang.Thread.sleep;
 import static org.junit.jupiter.api.Assertions.*;
 
 

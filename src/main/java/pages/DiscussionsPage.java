@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.sleep;
 import static org.openqa.selenium.By.xpath;
 
 public class DiscussionsPage extends HelperBase {

@@ -2,11 +2,10 @@ package pages;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.commands.ScrollIntoView;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$x;
 import static java.lang.String.format;
 import static org.openqa.selenium.By.xpath;
 
@@ -33,7 +32,6 @@ public class PostCard extends HelperBase {
         for (int i = 0; i < 10 && !Selenide.atBottom() && !postCard.exists(); ++i) {
             Selenide.executeJavaScript("window.scrollBy(0, window.innerHeight)");
         }
-        postCard.scrollIntoView(true);
         return new PostCard(postCard);
     }
 
