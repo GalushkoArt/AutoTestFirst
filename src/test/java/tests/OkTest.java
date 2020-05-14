@@ -1,5 +1,6 @@
 package tests;
 
+import com.codeborne.selenide.Selenide;
 import model.BotFactory;
 import org.junit.After;
 import org.junit.jupiter.api.BeforeAll;
@@ -8,8 +9,12 @@ import org.junit.jupiter.api.Test;
 import pages.*;
 
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.refresh;
+import static java.lang.Thread.sleep;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -82,14 +87,22 @@ public class OkTest extends TestBase {
     @Test
     public void postCommentingTest() {
         //todo рандомизация сообщения/поста
-        final String MESSAGE = "QWERTY";
+        final String MESSAGE = "Верните мой 2008";
         GroupPage currentPage = new GroupPage().openGroupPage();
-        PostCard currentPost = PostCard.getPostWithText("Мы все умрём?");
+        PostCard currentPost = PostCard.getPostWithText("стоимость техасской нефти");
 
         DiscussionsPage currentDiscussion = currentPost.openComments();
-        Message message = currentDiscussion.typeMessage(MESSAGE)
+        List<Message> messages = currentDiscussion.typeMessage(MESSAGE)
                 .sendMessage()
-                .getLastMessage();
+                .getMessages();
+
+        messages = messages.stream()
+                .filter((msg) -> msg.getName().equals(bot.getBotName()))
+                .collect(Collectors.toList());
+
+        assertTrue(!messages.isEmpty());
+
+        Message message = messages.get(messages.size() - 1);
         assertEquals(message.getText(), MESSAGE);
 
         message.Remove(); //Cброс

@@ -1,10 +1,12 @@
 package pages;
 
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.commands.ScrollIntoView;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.*;
 import static java.lang.String.format;
 import static org.openqa.selenium.By.xpath;
 
@@ -27,7 +29,12 @@ public class PostCard extends HelperBase {
      */
 
     public static PostCard getPostWithText(String text) {
-        return new PostCard($x(format(POST_WITH_TEXT, text)).scrollTo());
+        SelenideElement postCard = $x(format(POST_WITH_TEXT, text));
+        for (int i = 0; i < 10 && !Selenide.atBottom() && !postCard.exists(); ++i) {
+            Selenide.executeJavaScript("window.scrollBy(0, window.innerHeight)");
+        }
+        postCard.scrollIntoView(true);
+        return new PostCard(postCard);
     }
 
     /**
@@ -67,7 +74,8 @@ public class PostCard extends HelperBase {
     }
 
     public DiscussionsPage openComments() {
-        click(COMMENTS_BUTTON);
+        element.$(COMMENTS_BUTTON).hover();
+        element.$(COMMENTS_BUTTON).click();
         return new DiscussionsPage();
     }
 }
