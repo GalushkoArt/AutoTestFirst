@@ -12,6 +12,7 @@ public class PostCard extends HelperBase {
     private static final String POST_WITH_TEXT = ".//div[@class='feed-w' and .//*[contains(text(), \"%s\")]]";
     private static final String POLL_OPTION_WITH_TEXT = ".//li[.//*[contains(text(), \"%s\")]]";
     private static final By YES_BUTTON = xpath(".//span[contains(@class, 'button') and contains(@class, 'yes')]");
+    private static final By COMMENTS_BUTTON = xpath(".//*[@data-module = 'CommentWidgets']");
     public static final By CLICKED_SELECTION = xpath(".//label[contains(@class, '__checked')]");
     private SelenideElement element;
 
@@ -63,5 +64,10 @@ public class PostCard extends HelperBase {
     public PostCard verifyVote() {
         element.$(YES_BUTTON).click();
         return this;
+    }
+
+    public DiscussionsPage openComments() {
+        click(COMMENTS_BUTTON);
+        return new DiscussionsPage();
     }
 }
