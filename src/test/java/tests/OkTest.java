@@ -20,6 +20,7 @@ import java.util.stream.Stream;
 
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.refresh;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -75,35 +76,34 @@ public class OkTest extends TestBase {
         currentPost.clickOnOptionWithText("Нет").verifyVote(); //Сброс
     }
 
-    private static Stream<Arguments> randomStringProvider() throws IOException {
-        List<String> strings = Files.lines(Paths.get("src/test/java/tests/resources/strings.csv"))
+    private static Stream<Arguments> randomTitleProvider() throws IOException {
+        List<String> strings = Files.lines(Paths.get("src/test/java/tests/resources/titles.csv"))
                 .collect(Collectors.toList());
         Collections.shuffle(strings);
 
         return Stream.of(Arguments.of(strings.get(0)));
     }
 
-    //@ParameterizedTest
-    //@MethodSource("randomStringProvider")
-    public void videoPostTest(String text) {
-        final String TITLE = "Jva";
+    @ParameterizedTest
+    @MethodSource("randomTitleProvider")
+    public void videoPostTest(String title) {
+        final String TEXT = getRandomString();
 
         GroupPage currentPage = new GroupPage().openGroupPage();
-        currentPage = currentPage.pressCreateTopic()
-                .typeTopicText(text)
-                .addVideoWithTitle(TITLE)
+        currentPage.pressCreateTopic()
+                .typeTopicText(TEXT)
+                .addVideoWithTitle(title)
                 .sharePost();
 
-        PostCard post = PostCard.getPostWithText(text);
-        assertTrue(post.hasVideoWithTitle(TITLE));
+        PostCard post = PostCard.getPostWithText(TEXT);
+        assertTrue(post.hasVideoWithTitle(title));
 
-        //todo пофиксить удаление поста post.deletePost();
+        post.deletePost();
     }
 
     @Test
     public void postCommentingTest() {
-        //todo рандомизация сообщения/поста
-        final String MESSAGE = "Верните мой 2008";
+        final String MESSAGE = getRandomString();
         GroupPage currentPage = new GroupPage().openGroupPage();
         PostCard currentPost = PostCard.getPostWithText("стоимость техасской нефти");
 

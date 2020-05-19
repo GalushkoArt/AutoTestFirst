@@ -37,7 +37,7 @@ public class NewTopicCard {
 
     public NewTopicCard addVideoWithTitle(String title) {
         element.$(ADD_VIDEO_BUTTON).click();
-        $x(format(VIDEO_WITH_TITLE, title)).waitUntil(appear, 5000, 400);
+        $x(format(VIDEO_WITH_TITLE, title)).waitUntil(Condition.visible, 5000, 400);
         $x(format(VIDEO_WITH_TITLE, title)).click();
         return this;
     }
