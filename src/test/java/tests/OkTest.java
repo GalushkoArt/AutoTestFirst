@@ -4,11 +4,19 @@ import model.BotFactory;
 import org.junit.After;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import pages.*;
 
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.refresh;
@@ -19,13 +27,14 @@ public class OkTest extends TestBase {
     @BeforeAll
     public static void initTest() {
         baseUrl = "https://ok.ru/";
+        bot = BotFactory.getOkBot();
+        new PersonPage().openHomePage();
+        new LoginPage().logIn(bot);
     }
 
     @Test
     public void friendshipInviteTest() {
-        bot = BotFactory.getOkBot();
-        new LoginPage().openHomePage();
-        PersonPage currentPage =  new LoginPage().logIn(bot)
+        PersonPage currentPage =  new PersonPage()
                 .goToMenuFriends()
                 .clickOnPersonWithName("Данила", "Федоров")
                 .goToFriends()
@@ -36,11 +45,6 @@ public class OkTest extends TestBase {
 
         refresh(); //Сброс
         new PersonPage().revokeInvite();
-    }
-
-    @After
-    public void revokeInvite() {
-        //api revoking
     }
 
     @Test
@@ -58,11 +62,6 @@ public class OkTest extends TestBase {
         new PersonPage().addToFriends();
     }
 
-    @After
-    public void restoreInvite() {
-        //api inviting
-    }
-
     @Test
     public void votingTest() {
         GroupPage currentPage = new GroupPage().openGroupPage();
@@ -76,9 +75,29 @@ public class OkTest extends TestBase {
         currentPost.clickOnOptionWithText("Нет").verifyVote(); //Сброс
     }
 
-    @After
-    public void restoreVoting() {
-        //api deselection
+    private static Stream<Arguments> randomStringProvider() throws IOException {
+        List<String> strings = Files.lines(Paths.get("src/test/java/tests/resources/strings.csv"))
+                .collect(Collectors.toList());
+        Collections.shuffle(strings);
+
+        return Stream.of(Arguments.of(strings.get(0)));
+    }
+
+    //@ParameterizedTest
+    //@MethodSource("randomStringProvider")
+    public void videoPostTest(String text) {
+        final String TITLE = "Jva";
+
+        GroupPage currentPage = new GroupPage().openGroupPage();
+        currentPage = currentPage.pressCreateTopic()
+                .typeTopicText(text)
+                .addVideoWithTitle(TITLE)
+                .sharePost();
+
+        PostCard post = PostCard.getPostWithText(text);
+        assertTrue(post.hasVideoWithTitle(TITLE));
+
+        //todo пофиксить удаление поста post.deletePost();
     }
 
     @Test
@@ -97,11 +116,16 @@ public class OkTest extends TestBase {
                 .filter((msg) -> msg.getName().equals(bot.getBotName()))
                 .collect(Collectors.toList());
 
-        assertTrue(!messages.isEmpty());
+        assertFalse(messages.isEmpty());
 
         Message message = messages.get(messages.size() - 1);
         assertEquals(message.getText(), MESSAGE);
 
         message.Remove(); //Cброс
+    }
+
+    @After
+    public void restoreCondition() {
+        //api restoring
     }
 }

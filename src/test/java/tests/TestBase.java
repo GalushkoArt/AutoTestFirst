@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeAll;
 import static com.codeborne.selenide.Configuration.browser;
 
 public abstract class TestBase {
-    protected TestBot bot;
+    protected static TestBot bot;
 
     @BeforeAll
     public static void setUp() {
