@@ -18,50 +18,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.codeborne.selenide.Configuration.baseUrl;
-import static com.codeborne.selenide.Selenide.refresh;
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static org.junit.jupiter.api.Assertions.*;
 
 
 public class OkTest extends TestBase {
-    @BeforeAll
-    public static void initTest() {
-        baseUrl = "https://ok.ru/";
-        bot = BotFactory.getOkBot();
-        new PersonPage().openHomePage();
-        new LoginPage().logIn(bot);
-    }
-
-    @Test
-    public void friendshipInviteTest() {
-        PersonPage currentPage =  new PersonPage()
-                .goToMenuFriends()
-                .clickOnPersonWithName("Данила", "Федоров")
-                .goToFriends()
-                .clickOnPersonWithName("Артём", "Галушко")
-                .addToFriends();
-
-        assertFalse(currentPage.isInvitedToFriends());
-
-        refresh(); //Сброс
-        new PersonPage().revokeInvite();
-    }
-
-    @Test
-    public void revokeFriendshipTest() {
-        PersonPage currentPage =  new PersonPage();
-        currentPage.openHomePage()
-                .goToMenuFriends()
-                .goToSentRequests()
-                .clickOnPersonWithName("technopolisBot4","technopolisBot4")
-                .revokeInvite();
-
-        assertTrue(currentPage.isInvitedToFriends());
-
-        refresh(); //Сброс
-        new PersonPage().addToFriends();
-    }
 
     @Test
     public void votingTest() {

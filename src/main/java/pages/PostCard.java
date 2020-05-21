@@ -15,8 +15,8 @@ public class PostCard {
     private static final String ALT_POST_WITH_TEXT = ".//div[@class='portlet_b' and .//*[contains(text(), \"%s\")]]";
     private static final String POLL_OPTION_WITH_TEXT = ".//li[.//*[contains(text(), \"%s\")]]";
     private static final String VIDEO_WITH_TITLE = ".//a[@title=\"%s\" and contains(@class, 'video')]";
-    private static final By DELETE_POST_BUTTON = xpath(".//div[@class='mlr_top_ac']//ul//a[contains(@href, 'Remove')]");
-    private static final By CLOSE_LAYER = xpath(".//div[contains(@class,'layer_close']");
+    private static final By DELETE_POST_BUTTON = xpath(".//div[@id='hook_Block_ShortcutMenu']//ul//a[contains(@href, 'Remove')]");
+    private static final By CLOSE_LAYER = xpath(".//div[@class='media-layer_hld']//div[contains(@class,'layer_close_ico')]");
     private static final By POST_TEXT = xpath(".//a[@class='media-text_a']");
     private static final By POST_OPTIONS = xpath(".//div[@class='mlr_top_ac']");
     private static final By YES_BUTTON = xpath(".//span[contains(@class, 'button') and contains(@class, 'yes')]");
@@ -94,7 +94,8 @@ public class PostCard {
     public PostCard deletePost() {
         element.$(POST_TEXT).click();
         $(POST_OPTIONS).click();
-        $(DELETE_POST_BUTTON).click();  //todo разобраться почему здесь падает
+        $(DELETE_POST_BUTTON).waitUntil(visible, 2000, 200);
+        $(DELETE_POST_BUTTON).click();
         $(CLOSE_LAYER).click();
         return this;
     }

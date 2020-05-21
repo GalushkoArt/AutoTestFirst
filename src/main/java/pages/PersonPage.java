@@ -29,6 +29,7 @@ public class PersonPage extends HelperBase {
 
     public PersonPage addToFriends() {
         click(FRIENDSHIP_BUTTON);
+        waitUntilShows(REVOKED_FRIENDSHIP);
         return this;
     }
 
