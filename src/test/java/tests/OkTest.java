@@ -1,8 +1,6 @@
 package tests;
 
-import model.BotFactory;
 import org.junit.After;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -58,7 +56,8 @@ public class OkTest extends TestBase {
         PostCard post = PostCard.getPostWithText(TEXT);
         assertTrue(post.hasVideoWithTitle(title));
 
-        post.deletePost();
+        post.getPostPage()
+                .deletePost();
     }
 
     @Test
@@ -68,7 +67,7 @@ public class OkTest extends TestBase {
         PostCard currentPost = PostCard.getPostWithText("стоимость техасской нефти");
 
         DiscussionsPage currentDiscussion = currentPost.openComments();
-        List<Message> messages = currentDiscussion.typeMessage(MESSAGE)
+        List<MessageCard> messages = currentDiscussion.typeMessage(MESSAGE)
                 .sendMessage()
                 .getMessages();
 
@@ -78,10 +77,37 @@ public class OkTest extends TestBase {
 
         assertFalse(messages.isEmpty());
 
-        Message message = messages.get(messages.size() - 1);
+        MessageCard message = messages.get(messages.size() - 1);
         assertEquals(message.getText(), MESSAGE);
 
         message.Remove(); //Cброс
+    }
+
+    @Test
+    public void productCreatingTest() {
+        final String PRODUCT_TITLE = getRandomString();
+        final String PRODUCT_DESCRIPTION = getRandomString();
+        final String PRODUCT_PRICE = getRandomNumber();
+
+        GroupProductsPage currentPage = new GroupPage()
+                .openGroupPage()
+                .goToProducts();
+
+        currentPage = currentPage
+                .clickPlaceButton()
+                .typeTitle(PRODUCT_TITLE)
+                .typeDescription(PRODUCT_DESCRIPTION)
+                .typePrice(PRODUCT_PRICE)
+                .clickMailDelivery()
+                .clickShare();
+
+        ProductPage product = currentPage.openProductWithTitle(PRODUCT_TITLE);
+
+        assertEquals(PRODUCT_TITLE, product.getTitle());
+        assertEquals(PRODUCT_DESCRIPTION, product.getDescription());
+        assertEquals(PRODUCT_PRICE, product.getPrice());
+
+        product.deleteProduct(); //Cброс
     }
 
     @After

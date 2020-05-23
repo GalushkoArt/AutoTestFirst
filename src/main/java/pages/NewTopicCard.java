@@ -46,7 +46,7 @@ public class NewTopicCard {
 
     public GroupPage sharePost() {
         element.$(SHARE_BUTTON).waitUntil(visible, 5000, 400);
-        element.$(SHARE_BUTTON).click();
+        element.$(SHARE_BUTTON).scrollTo().click();
         return new GroupPage();
     }
 

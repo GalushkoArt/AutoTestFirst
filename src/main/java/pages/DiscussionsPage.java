@@ -26,10 +26,10 @@ public class DiscussionsPage extends HelperBase {
         return this;
     }
 
-    public List<Message> getMessages() {
+    public List<MessageCard> getMessages() {
         ElementsCollection messages = $$(MESSAGE);
         return messages.stream()
-                .map(Message::new)
+                .map(MessageCard::new)
                 .collect(Collectors.toList());
     }
 

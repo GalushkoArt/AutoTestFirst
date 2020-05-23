@@ -57,6 +57,15 @@ public abstract class HelperBase {
         return this;
     }
 
+    protected String getText(By locator) {
+        return $(locator).getText();
+    }
+
+    protected HelperBase scrollToElement(By locator) {
+        $(locator).scrollTo();
+        return this;
+    }
+
     /**
      * checks if element with locator is displayed
      * @param locator Selenium By locator

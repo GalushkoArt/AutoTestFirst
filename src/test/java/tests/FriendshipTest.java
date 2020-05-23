@@ -17,7 +17,7 @@ public class FriendshipTest extends TestBase {
                 .clickOnPersonWithName("Артём", "Галушко")
                 .addToFriends();
 
-        assertFalse(currentPage.isInvitedToFriends());
+        assertTrue(currentPage.isInvitedToFriends());
 
         refresh(); //Сброс
         new PersonPage().revokeInvite();
@@ -32,7 +32,7 @@ public class FriendshipTest extends TestBase {
                 .clickOnPersonWithName("technopolisBot4","technopolisBot4")
                 .revokeInvite();
 
-        assertTrue(currentPage.isInvitedToFriends());
+        assertFalse(currentPage.isInvitedToFriends());
 
         refresh(); //Сброс
         new PersonPage().addToFriends();
