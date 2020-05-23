@@ -2,6 +2,7 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 
 import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Condition.visible;
@@ -47,9 +48,21 @@ public abstract class BaseCard {
         return this;
     }
 
+    public BaseCard sendKey(By locator, Keys key) {
+        element.$(locator).waitUntil(appear, 5000, 400);
+        element.$(locator).hover()
+                .sendKeys(key);
+        return this;
+    }
+
     public boolean isExists(By locator) {
         element.$(locator).waitUntil(appear, 5000, 400);
         return element.$(locator).exists();
+    }
+
+    public BaseCard waitUntilShows(By locator) {
+        $(locator).waitUntil(appear, 5000, 400);
+        return this;
     }
 
     public void verify(By locator) {

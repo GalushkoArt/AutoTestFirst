@@ -31,7 +31,7 @@ public class OkTest extends TestBase {
                 .verifyVote()
                 .checkOptionWithTextClicked("Нет");
 
-        currentPost.clickOnOptionWithText("Нет").verifyVote(); //Сброс
+        currentPost.clickOnOptionWithText("Нет").verifyVote(); // сброс
     }
 
     private static Stream<Arguments> randomTitleProvider() throws IOException {
@@ -56,7 +56,7 @@ public class OkTest extends TestBase {
         PostCard post = PostCard.getPostWithText(TEXT);
         assertTrue(post.hasVideoWithTitle(title));
 
-        post.getPostPage()
+        post.getPostPage()      // сброс
                 .deletePost();
     }
 
@@ -80,7 +80,7 @@ public class OkTest extends TestBase {
         MessageCard message = messages.get(messages.size() - 1);
         assertEquals(message.getText(), MESSAGE);
 
-        message.Remove(); //Cброс
+        message.Remove(); // сброс
     }
 
     @Test
@@ -107,7 +107,51 @@ public class OkTest extends TestBase {
         assertEquals(PRODUCT_DESCRIPTION, product.getDescription());
         assertEquals(PRODUCT_PRICE, product.getPrice());
 
-        product.deleteProduct(); //Cброс
+        product.deleteProduct(); // сброс
+    }
+
+    @Test
+    public void catalogCreatingTest() {
+        final String CATALOG_NAME = getRandomString();
+
+        GroupProductsPage currentPage = new GroupPage()
+                .openGroupPage()
+                .goToProducts();
+
+        currentPage = currentPage.clickCreateCatalog()
+                .typeName(CATALOG_NAME) // .sendCoverPhoto()
+                .clickSave();
+
+        CatalogPage catalog = currentPage.clickOnCatalogWithName(CATALOG_NAME);
+
+        assertEquals(CATALOG_NAME, catalog.getCatalogName());
+
+        catalog.deleteCatalog(); // сброс
+    }
+
+    @Test
+    public void changingCatalogOfProductTest() {
+        final String CATALOG_NAME = "Котятки";
+        final String PRODUCT_TITLE = "Не пёсик";
+
+        GroupProductsPage currentPage = new GroupPage()
+                .openGroupPage()
+                .goToProducts();
+
+        currentPage.openProductWithTitle(PRODUCT_TITLE)
+                .editProduct()
+                .deleteCatalog()
+                .typeCatalog(CATALOG_NAME)
+                .clickShare();
+
+        ProductPage product = new ProductPage();
+
+        assertEquals(CATALOG_NAME, product.getCatalog());
+
+        product.editProduct()   // сброс
+                .deleteCatalog()
+                .typeCatalog("Пёсики")
+                .clickShare();
     }
 
     @After
