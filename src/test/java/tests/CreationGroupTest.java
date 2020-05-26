@@ -1,14 +1,22 @@
 package tests;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.GroupListPage;
 
 public class CreationGroupTest extends TestBase{
 
+    static GroupListPage groupListPage;
+
+    @BeforeAll
+    public static void groupListPageInit(){
+        groupListPage = new GroupListPage();
+    }
+
     @Test
     public void createGroupTest(){
-        new GroupListPage()
+        groupListPage
                 .openGroupListPage()
                 .clickOnCreateNewCroupButton()
                 .choseTypeOfGroup()
@@ -16,9 +24,9 @@ public class CreationGroupTest extends TestBase{
                 .done();
     }
 
-    @Test
-    public void deleteGroupTest(){
-        //TODO чуть позже доделаю удаление
-    }
+//    @Test
+//    public void deleteGroupTest(){
+//        groupListPage.deleteGroup();
+//    }
 
 }
