@@ -154,6 +154,22 @@ public class OkTest extends TestBase {
                 .clickShare();
     }
 
+    @Test
+    public void sendMusicTopicTest() throws Exception {
+        new GroupPage().openGroupPage();
+        MusicTopicElement musicTopicElement = new MusicTopicElement("Enter Sandman");
+        musicTopicElement.getMusicLayer().choseMusic().shareMusic();
+        musicTopicElement.deleteFirstTopic();
+    }
+
+    @Test
+    public void sendGeoTopicTest() throws Exception {
+        new GroupPage().openGroupPage();
+        GeoTopicElement geoTopicElement = new GeoTopicElement("SPBPU");
+        geoTopicElement.getGeoLayer().chosePlace().confirmPlace().shareGeo();
+//        geoTopicElement.deleteFirstTopic();
+    }
+
     @After
     public void restoreCondition() {
         //api restoring
