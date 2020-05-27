@@ -19,10 +19,6 @@ public abstract class HelperBase {
      */
 
     public PersonPage openHomePage() {
-        /*Если что-то прервётся,
-        то пост с локацией будет предложено продолжить
-        т.к сохраняет в куки*/
-        Selenide.clearBrowserCookies();
         Selenide.open("/");
         return new PersonPage();
     }
@@ -32,6 +28,11 @@ public abstract class HelperBase {
      * @param locator Selenium By locator
      * @return current page
      */
+
+    protected HelperBase hover(By locator) {
+        $(locator).hover();
+        return this;
+    }
 
     protected HelperBase click(By locator) {
         $(locator).click();
@@ -145,5 +146,12 @@ public abstract class HelperBase {
 
     protected SelenideElement findLinkWithText(String text) {
         return $x(format(linkWithTextSelector, text));
+    }
+
+    protected HelperBase chooseFirstElementInList(By element, By list) {
+        $(list).findAll(element)
+                .first()
+                .click();
+        return this;
     }
 }

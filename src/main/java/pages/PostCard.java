@@ -4,20 +4,23 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Selenide.*;
 import static java.lang.String.format;
 import static org.openqa.selenium.By.xpath;
 
-public class PostCard extends BaseCard{
+public class PostCard extends BaseCard {
     private static final String POST_WITH_TEXT = ".//div[@class='feed-w' and .//*[contains(text(), \"%s\")]]";
     private static final String ALT_POST_WITH_TEXT = ".//div[@class='portlet_b' and .//*[contains(text(), \"%s\")]]";
     private static final String POLL_OPTION_WITH_TEXT = ".//li[.//*[contains(text(), \"%s\")]]";
     private static final String VIDEO_WITH_TITLE = ".//a[@title=\"%s\" and contains(@class, 'video')]";
-    private static final By POST_TEXT = xpath(".//a[@class='media-text_a']");
+    private static final By VIDEO_TITLE = xpath(".//a[@class='video-card_n ellip']");
+    private static final By POST_TEXT = xpath(".//div[@link-class='media-text_lnk']");
+    private static final By POST_PLACE_MAP = xpath(".//div[@class='media-map']");
+    private static final By POST_MUSIC = xpath(".//div[@class='media-block media-music']");
+    private static final By MUSIC_TITLE = xpath(".//a[contains(@class,'track-with-cover_name')]");
     private static final By YES_BUTTON = xpath(".//span[contains(@class, 'button') and contains(@class, 'yes')]");
     private static final By COMMENTS_BUTTON = xpath(".//*[@data-module = 'CommentWidgets']");
-    public static final By CLICKED_SELECTION = xpath(".//label[contains(@class, '__checked')]");
+    private static final By CLICKED_SELECTION = xpath(".//label[contains(@class, '__checked')]");
 
     protected PostCard(SelenideElement element) {
         super(element);
@@ -34,7 +37,7 @@ public class PostCard extends BaseCard{
         SelenideElement altPostCard = $x(format(ALT_POST_WITH_TEXT, text));
         for (int i = 0; i < 10 && !Selenide.atBottom() && !postCard.exists(); ++i) {
             Selenide.executeJavaScript("window.scrollBy(0, window.innerHeight)");
-            sleep(200);  // todo попробовать заменить слип на ожидание
+            sleep(200);
         }
         if (postCard.exists()) {
             postCard.scrollTo();
@@ -79,6 +82,22 @@ public class PostCard extends BaseCard{
 
     public boolean hasVideoWithTitle(String title) {
         return isExists(xpath(format(VIDEO_WITH_TITLE, title)));
+    }
+
+    public boolean hasPlaceMap() {
+        return isExists(POST_PLACE_MAP);
+    }
+
+    public String getVideoTitle() {
+        return getText(VIDEO_TITLE);
+    }
+
+    public String getPostText() {
+        return getText(POST_TEXT);
+    }
+
+    public String getMusicNameOfPost() {
+        return getText(MUSIC_TITLE);
     }
 
     public PostPage getPostPage() {

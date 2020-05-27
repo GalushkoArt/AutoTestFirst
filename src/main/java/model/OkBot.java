@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 class OkBot extends TestBot {
 
     OkBot() {
-        super(ResourceBundle.getBundle("ok_bot_data"), "Test Bot");
+        super(ResourceBundle.getBundle("bots/ok_bot_data"), "Test Bot");
     }
 
     OkBot(String name) {

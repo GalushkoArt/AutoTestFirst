@@ -2,6 +2,7 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+
 import static org.openqa.selenium.By.xpath;
 
 public class MessageCard extends BaseCard {

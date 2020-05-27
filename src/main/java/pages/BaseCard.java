@@ -4,8 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
-import static com.codeborne.selenide.Condition.appear;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 
 public abstract class BaseCard {
@@ -26,7 +25,7 @@ public abstract class BaseCard {
     }
 
     public BaseCard click(By locator) {
-        element.$(locator).waitUntil(appear, 5000, 400);
+        waitUntilShows(locator);
         element.$(locator)
                 .hover()
                 .click();
@@ -34,7 +33,7 @@ public abstract class BaseCard {
     }
 
     public BaseCard confirm(By locator) {
-        $(locator).waitUntil(appear, 5000, 400);
+        waitUntilShows(locator);
         $(locator)
                 .hover()
                 .click();
@@ -42,21 +41,21 @@ public abstract class BaseCard {
     }
 
     public BaseCard type(By locator, String text) {
-        element.$(locator).waitUntil(appear, 5000, 400);
+        waitUntilShows(locator);
         element.$(locator).hover()
                 .sendKeys(text);
         return this;
     }
 
     public BaseCard sendKey(By locator, Keys key) {
-        element.$(locator).waitUntil(appear, 5000, 400);
+        waitUntilShows(locator);
         element.$(locator).hover()
                 .sendKeys(key);
         return this;
     }
 
     public boolean isExists(By locator) {
-        element.$(locator).waitUntil(appear, 5000, 400);
+        waitUntilShows(locator);
         return element.$(locator).exists();
     }
 
@@ -65,18 +64,26 @@ public abstract class BaseCard {
         return this;
     }
 
+    public BaseCard waitUntilDisappear(By locator) {
+        $(locator).waitUntil(disappear, 5000, 400);
+        return this;
+    }
+
     public void verify(By locator) {
-        element.$(locator).waitUntil(appear, 5000, 400);
-        element.$(locator).shouldBe(visible);
+        waitUntilShows(locator);
+        element.$(locator)
+                .shouldBe(visible);
     }
 
     public void verify(By parent, By locator) {
-        element.$(locator).waitUntil(appear, 5000, 400);
-        element.$(parent).$(locator)
+        waitUntilShows(locator);
+        element.$(parent)
+                .$(locator)
                 .shouldBe(visible);
     }
 
     public String getText(By locator) {
+        waitUntilShows(locator);
         return element.$(locator).getText();
     }
 }

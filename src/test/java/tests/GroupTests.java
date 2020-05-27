@@ -6,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import pages.*;
+import pages.MessageCard;
 
 
 import java.io.IOException;
@@ -16,23 +17,30 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.lang.Integer.parseInt;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class OkTest extends TestBase {
-    private static final String groupID = "57637278384344";
+public class GroupTests extends TestBase {
+    private static final String GROUP_ID = "57637278384344";
 
     @Test
     public void votingTest() {
-        GroupPage currentPage = new GroupPage().openGroupPage(groupID);
-        PostCard currentPost = PostCard.getPostWithText("Мы все умрём?");
-        currentPost.clickOnOptionWithText("Да")
-                .checkOptionWithTextClicked("Да")
-                .clickOnOptionWithText("Нет")
-                .verifyVote()
-                .checkOptionWithTextClicked("Нет");
+        final String post = "Мы все умрём?";
+        final String firstOption = "Да";
+        final String secondOption = "Нет";
 
-        currentPost.clickOnOptionWithText("Нет").verifyVote(); // сброс
+        GroupPage currentPage = new GroupPage().openGroupPage(GROUP_ID);
+        PostCard currentPost = PostCard.getPostWithText(post);
+        currentPost.clickOnOptionWithText(firstOption)
+                .checkOptionWithTextClicked(firstOption)
+                .clickOnOptionWithText(secondOption)
+                .verifyVote()
+                .checkOptionWithTextClicked(secondOption);
+
+        currentPost.clickOnOptionWithText(secondOption).verifyVote(); // сброс
     }
 
     private static Stream<Arguments> randomTitleProvider() throws IOException {
@@ -48,14 +56,52 @@ public class OkTest extends TestBase {
     public void videoPostTest(String title) {
         final String TEXT = getRandomString();
 
-        GroupPage currentPage = new GroupPage().openGroupPage(groupID);
+        GroupPage currentPage = new GroupPage().openGroupPage(GROUP_ID);
         currentPage.pressCreateTopic()
                 .typeTopicText(TEXT)
                 .addVideoWithTitle(title)
                 .sharePost();
 
         PostCard post = PostCard.getPostWithText(TEXT);
-        assertTrue(post.hasVideoWithTitle(title));
+        assertThat(post.getVideoTitle(), equalTo(title));
+
+        post.getPostPage()      // сброс
+                .deletePost();
+    }
+
+    @Test
+    public void geoTopicTest() {
+        final String TEXT = getRandomString();
+        final String PLACE = "SPBPU";
+
+        GroupPage currentPage = new GroupPage().openGroupPage(GROUP_ID);
+        currentPage.pressCreateTopic()
+                .typeTopicText(TEXT)
+                .addGeoWithPlace(PLACE)
+                .sharePost();
+
+        PostCard post = PostCard.getPostWithText(TEXT);
+        assertTrue(post.hasPlaceMap());
+        assertThat(post.getPostText(), equalTo(TEXT));
+
+        post.getPostPage()      // сброс
+                .deletePost();
+    }
+
+    @Test
+    public void sendMusicTopicTest() {
+        final String MUSIC = "Enter Sandman";
+        final String TEXT = getRandomString();
+
+        GroupPage currentPage = new GroupPage().openGroupPage(GROUP_ID);
+        currentPage.pressCreateTopic()
+                .typeTopicText(TEXT)
+                .addMusicWithName(MUSIC)
+                .sharePost();
+
+        PostCard post = PostCard.getPostWithText(TEXT);
+        assertThat(post.getPostText(), equalTo(TEXT));
+        assertThat(post.getMusicNameOfPost(), equalTo(MUSIC));
 
         post.getPostPage()      // сброс
                 .deletePost();
@@ -63,9 +109,11 @@ public class OkTest extends TestBase {
 
     @Test
     public void postCommentingTest() {
+        final String POST = "стоимость техасской нефти";
         final String MESSAGE = getRandomString();
-        GroupPage currentPage = new GroupPage().openGroupPage(groupID);
-        PostCard currentPost = PostCard.getPostWithText("стоимость техасской нефти");
+
+        GroupPage currentPage = new GroupPage().openGroupPage(GROUP_ID);
+        PostCard currentPost = PostCard.getPostWithText(POST);
 
         DiscussionsPage currentDiscussion = currentPost.openComments();
         List<MessageCard> messages = currentDiscussion.typeMessage(MESSAGE)
@@ -75,11 +123,10 @@ public class OkTest extends TestBase {
         messages = messages.stream()
                 .filter((msg) -> msg.getName().equals(bot.getBotName()))
                 .collect(Collectors.toList());
-
         assertFalse(messages.isEmpty());
 
         MessageCard message = messages.get(messages.size() - 1);
-        assertEquals(message.getText(), MESSAGE);
+        assertThat(message.getText(), equalTo(MESSAGE));
 
         message.Remove(); // сброс
     }
@@ -91,22 +138,22 @@ public class OkTest extends TestBase {
         final String PRODUCT_PRICE = getRandomNumber();
 
         GroupProductsPage currentPage = new GroupPage()
-                .openGroupPage(groupID)
+                .openGroupPage(GROUP_ID)
                 .goToProducts();
 
         currentPage = currentPage
                 .clickPlaceButton()
                 .typeTitle(PRODUCT_TITLE)
-                .typeDescription(PRODUCT_DESCRIPTION)
                 .typePrice(PRODUCT_PRICE)
+                .typeDescription(PRODUCT_DESCRIPTION)
                 .clickMailDelivery()
                 .clickShare();
 
         ProductPage product = currentPage.openProductWithTitle(PRODUCT_TITLE);
 
-        assertEquals(PRODUCT_TITLE, product.getTitle());
-        assertEquals(PRODUCT_DESCRIPTION, product.getDescription());
-        assertEquals(PRODUCT_PRICE, product.getPrice());
+        assertThat(product.getTitle(), equalTo(PRODUCT_TITLE));
+        assertThat(product.getDescription(), equalTo(PRODUCT_DESCRIPTION));
+        assertThat(parseInt(product.getPrice()), equalTo(parseInt(PRODUCT_PRICE)));
 
         product.deleteProduct(); // сброс
     }
@@ -116,7 +163,7 @@ public class OkTest extends TestBase {
         final String CATALOG_NAME = getRandomString();
 
         GroupProductsPage currentPage = new GroupPage()
-                .openGroupPage(groupID)
+                .openGroupPage(GROUP_ID)
                 .goToProducts();
 
         currentPage = currentPage.clickCreateCatalog()
@@ -125,68 +172,35 @@ public class OkTest extends TestBase {
 
         CatalogPage catalog = currentPage.clickOnCatalogWithName(CATALOG_NAME);
 
-        assertEquals(CATALOG_NAME, catalog.getCatalogName());
+        assertThat(catalog.getCatalogName(), equalTo(CATALOG_NAME));
 
         catalog.deleteCatalog(); // сброс
     }
 
     @Test
     public void changingCatalogOfProductTest() {
-        final String CATALOG_NAME = "Котятки";
         final String PRODUCT_TITLE = "Не пёсик";
+        final String PRODUCT_CATALOG = "Пёсики";
+        final String TARGET_CATALOG = "Котятки";
 
         GroupProductsPage currentPage = new GroupPage()
-                .openGroupPage(groupID)
+                .openGroupPage(GROUP_ID)
                 .goToProducts();
 
         currentPage.openProductWithTitle(PRODUCT_TITLE)
                 .editProduct()
                 .deleteCatalog()
-                .typeCatalog(CATALOG_NAME)
+                .typeCatalog(TARGET_CATALOG)
                 .clickShare();
 
         ProductPage product = new ProductPage();
 
-        assertEquals(CATALOG_NAME, product.getCatalog());
+        assertThat(product.getCatalog(), equalTo(TARGET_CATALOG));
 
         product.editProduct()   // сброс
                 .deleteCatalog()
-                .typeCatalog("Пёсики")
+                .typeCatalog(PRODUCT_CATALOG)
                 .clickShare();
-    }
-
-    @Test
-    public void creatingGroupTest() {
-        final NewGroupCard.groupTypes groupType = NewGroupCard.groupTypes.PUBLIC;
-        final String groupName = "Название тестовой группы";
-        final String groupDescription = "Это описание тестовой группы";
-
-        NewGroupCard card = GroupsPage.openGroupsPage().pressCreateGroup();
-        GroupPage groupPage = card.chooseGroupType(groupType)
-                .typeGroupName(groupName)
-                .typeGroupDescription(groupDescription)
-                .create();
-
-        assertEquals(groupName, groupPage.getGroupName());
-        assertEquals(groupDescription, groupPage.getGroupDescription());
-
-        groupPage.deleteGroup(); //сброс
-    }
-
-    @Test
-    public void sendMusicTopicTest() throws Exception {
-        new GroupPage().openGroupPage();
-        MusicTopicElement musicTopicElement = new MusicTopicElement("Enter Sandman");
-        musicTopicElement.getMusicLayer().choseMusic().shareMusic();
-        musicTopicElement.deleteFirstTopic();
-    }
-
-    @Test
-    public void sendGeoTopicTest() throws Exception {
-        new GroupPage().openGroupPage();
-        GeoTopicElement geoTopicElement = new GeoTopicElement("SPBPU");
-        geoTopicElement.getGeoLayer().chosePlace().confirmPlace().shareGeo();
-//        geoTopicElement.deleteFirstTopic();
     }
 
     @After

@@ -20,7 +20,7 @@ public class NewCatalogCard extends BaseCard {
         return this;
     }
 
-    public NewCatalogCard sendCoverPhoto() {    // todo попробовать пофиксить добавление фото
+    public NewCatalogCard sendCoverPhoto() {
         type(CATALOG_COVER, "src\\test\\java\\tests\\resources\\noise.jpg");
         return this;
     }

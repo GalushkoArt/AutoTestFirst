@@ -1,7 +1,6 @@
 package tests;
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
 import model.BotFactory;
 import model.TestBot;
 import org.junit.jupiter.api.AfterAll;
@@ -33,7 +32,7 @@ public abstract class TestBase {
     }
 
     protected static String getRandomNumber() {
-        return randomNumeric(1, 9);
+        return randomNumeric(2, 9);
     }
 
     @AfterAll

@@ -35,6 +35,7 @@ public class ProductPage extends HelperBase {
     }
 
     public ProductPage deleteProduct() {
+        waitUntilShows(PRODUCT_OPTIONS);
         click(PRODUCT_OPTIONS);
         waitUntilShows(DELETE_PRODUCT_BUTTON);
         click(DELETE_PRODUCT_BUTTON);
@@ -44,6 +45,7 @@ public class ProductPage extends HelperBase {
     }
 
     public NewProductCard editProduct() {
+        waitUntilShows(PRODUCT_OPTIONS);
         click(PRODUCT_OPTIONS);
         waitUntilShows(EDIT_PRODUCT_BUTTON);
         click(EDIT_PRODUCT_BUTTON);

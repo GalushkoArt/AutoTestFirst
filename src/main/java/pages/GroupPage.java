@@ -1,10 +1,8 @@
 package pages;
 
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Selenide.$;
 import static java.lang.String.format;
 import static org.openqa.selenium.By.xpath;
@@ -14,11 +12,12 @@ public class GroupPage extends HelperBase {
 
     private static final String OPTION_WITH_TEXT = ".//*[contains(@class, 'u-menu_li') and .//*[contains(text(), \"%s\")]]";
 
+    private static final By REMOVE_OPTION = xpath(".//*[contains(@class, 'u-menu_li')]//*[contains(@hrefattrs,'RemoveAltGroup')]");
     private static final By GROUP_NAME = xpath(".//*[@class = 'group-name_h']");
     private static final By GROUP_DESCRIPTION = xpath(".//*[contains(@class, 'group-info_desc')]");
     private static final By MORE_OPTIONS_BUTTON = xpath(".//*[contains(@class, 'expand-action-item')]");
-    private static final By MORE_OPTIONS_CARD = xpath(".//*[contains(@class, 'dropdown_cnt')]");
-    private static final By GROUP_DELETE_CONFIRM_CARD = xpath(".//*[@class = 'modal-new_cnt' and .//*[contains(text(), 'Удалить группу')]]");
+    private static final By MORE_OPTIONS_CARD = xpath(".//*[contains(@class, 'expand-action-item')]//*[contains(@class, 'dropdown_cnt')]");
+    private static final By GROUP_DELETE_CONFIRM_CARD = xpath(".//*[@class = 'modal-new_cnt' and .//*[contains(@id,'RemoveAltGroupForm')]]");
     private static final By GROUP_DELETE_CONFIRM_BUTTON = xpath(".//input[contains(@data-l, 'confirm')]");
 
     public static final By CREATE_TOPIC_FIELD = xpath(".//*[@id='hook_Block_PostingForm']//*[@class='input_placeholder']");
@@ -46,25 +45,22 @@ public class GroupPage extends HelperBase {
     }
 
     public GroupsPage deleteGroup() {
+        hover(MORE_OPTIONS_BUTTON);
         click(MORE_OPTIONS_BUTTON);
-        SelenideElement optionsMenu = $(MORE_OPTIONS_BUTTON).$(MORE_OPTIONS_CARD);
-        //todo maybe make method in HelperBase for SelenideElement
-        // because there are 2 different menus on page with same locator
-        optionsMenu.waitUntil(appear, 5000, 400);
-        SelenideElement option = optionsMenu.$(xpath(format(OPTION_WITH_TEXT, "Удалить")));
-        option.click();
+        waitUntilShows(MORE_OPTIONS_CARD);
+        click(REMOVE_OPTION);
         waitUntilShows(GROUP_DELETE_CONFIRM_CARD);
         click(GROUP_DELETE_CONFIRM_BUTTON);
         return new GroupsPage();
     }
 
     public String getGroupName() {
-        return $(GROUP_NAME).text();
+        return getText(GROUP_NAME);
     }
 
     public String getGroupDescription() {
         if (isElementDisplayed(GROUP_DESCRIPTION)) {
-            return $(GROUP_DESCRIPTION).text();
+            return getText(GROUP_DESCRIPTION);
         } else {
             return "";
         }
