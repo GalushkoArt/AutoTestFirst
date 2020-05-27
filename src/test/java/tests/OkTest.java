@@ -20,10 +20,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class OkTest extends TestBase {
+    private static final String groupID = "57637278384344";
 
     @Test
     public void votingTest() {
-        GroupPage currentPage = new GroupPage().openGroupPage();
+        GroupPage currentPage = new GroupPage().openGroupPage(groupID);
         PostCard currentPost = PostCard.getPostWithText("Мы все умрём?");
         currentPost.clickOnOptionWithText("Да")
                 .checkOptionWithTextClicked("Да")
@@ -47,7 +48,7 @@ public class OkTest extends TestBase {
     public void videoPostTest(String title) {
         final String TEXT = getRandomString();
 
-        GroupPage currentPage = new GroupPage().openGroupPage();
+        GroupPage currentPage = new GroupPage().openGroupPage(groupID);
         currentPage.pressCreateTopic()
                 .typeTopicText(TEXT)
                 .addVideoWithTitle(title)
@@ -63,7 +64,7 @@ public class OkTest extends TestBase {
     @Test
     public void postCommentingTest() {
         final String MESSAGE = getRandomString();
-        GroupPage currentPage = new GroupPage().openGroupPage();
+        GroupPage currentPage = new GroupPage().openGroupPage(groupID);
         PostCard currentPost = PostCard.getPostWithText("стоимость техасской нефти");
 
         DiscussionsPage currentDiscussion = currentPost.openComments();
@@ -90,7 +91,7 @@ public class OkTest extends TestBase {
         final String PRODUCT_PRICE = getRandomNumber();
 
         GroupProductsPage currentPage = new GroupPage()
-                .openGroupPage()
+                .openGroupPage(groupID)
                 .goToProducts();
 
         currentPage = currentPage
@@ -115,7 +116,7 @@ public class OkTest extends TestBase {
         final String CATALOG_NAME = getRandomString();
 
         GroupProductsPage currentPage = new GroupPage()
-                .openGroupPage()
+                .openGroupPage(groupID)
                 .goToProducts();
 
         currentPage = currentPage.clickCreateCatalog()
@@ -135,7 +136,7 @@ public class OkTest extends TestBase {
         final String PRODUCT_TITLE = "Не пёсик";
 
         GroupProductsPage currentPage = new GroupPage()
-                .openGroupPage()
+                .openGroupPage(groupID)
                 .goToProducts();
 
         currentPage.openProductWithTitle(PRODUCT_TITLE)
@@ -152,6 +153,24 @@ public class OkTest extends TestBase {
                 .deleteCatalog()
                 .typeCatalog("Пёсики")
                 .clickShare();
+    }
+
+    @Test
+    public void creatingGroupTest() {
+        final NewGroupCard.groupTypes groupType = NewGroupCard.groupTypes.PUBLIC;
+        final String groupName = "Название тестовой группы";
+        final String groupDescription = "Это описание тестовой группы";
+
+        NewGroupCard card = GroupsPage.openGroupsPage().pressCreateGroup();
+        GroupPage groupPage = card.chooseGroupType(groupType)
+                .typeGroupName(groupName)
+                .typeGroupDescription(groupDescription)
+                .create();
+
+        assertEquals(groupName, groupPage.getGroupName());
+        assertEquals(groupDescription, groupPage.getGroupDescription());
+
+        groupPage.deleteGroup(); //сброс
     }
 
     @Test
