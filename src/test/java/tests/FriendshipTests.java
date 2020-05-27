@@ -9,17 +9,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class FriendshipTests extends TestBase {
     @Test
     public void friendshipInviteTest() {
-        final String fFirstName = "Данила";
-        final String fLastName = "Федоров";
-        final String ffFirstName = "Артём";
-        final String ffLastName = "Галушко";
+        final String F_FIRST_NAME = "Данила";
+        final String F_LAST_NAME = "Федоров";
+        final String FF_FIRST_NAME = "Артём";
+        final String FF_LAST_NAME = "Галушко";
 
 
         PersonPage currentPage =  new PersonPage()
                 .goToMenuFriends()
-                .clickOnPersonWithName(fFirstName, fLastName)
+                .clickOnPersonWithName(F_FIRST_NAME, F_LAST_NAME)
                 .goToFriends()
-                .clickOnPersonWithName(ffFirstName, ffLastName)
+                .clickOnPersonWithName(FF_FIRST_NAME, FF_LAST_NAME)
                 .addToFriends();
 
         assertTrue(currentPage.isInvitedToFriends());
@@ -29,15 +29,15 @@ public class FriendshipTests extends TestBase {
 
     @Test
     public void revokeFriendshipTest() {
-        final String pFirstName = "technopolisBot4";
-        final String pLastName = "technopolisBot4";
+        final String P_FIRST_NAME = "technopolisBot4";
+        final String P_LAST_NAME = "technopolisBot4";
 
 
-        PersonPage currentPage =  new PersonPage();
+        PersonPage currentPage = new PersonPage();
         currentPage.openHomePage()
                 .goToMenuFriends()
                 .goToSentRequests()
-                .clickOnPersonWithName(pFirstName, pLastName)
+                .clickOnPersonWithName(P_FIRST_NAME, P_LAST_NAME)
                 .revokeInvite();
 
         assertFalse(currentPage.isInvitedToFriends());

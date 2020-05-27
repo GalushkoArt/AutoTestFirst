@@ -28,19 +28,19 @@ public class GroupTests extends TestBase {
 
     @Test
     public void votingTest() {
-        final String post = "Мы все умрём?";
-        final String firstOption = "Да";
-        final String secondOption = "Нет";
+        final String POST = "Мы все умрём?";
+        final String FIRST_OPTION = "Да";
+        final String SECOND_OPTION = "Нет";
 
         GroupPage currentPage = new GroupPage().openGroupPage(GROUP_ID);
-        PostCard currentPost = PostCard.getPostWithText(post);
-        currentPost.clickOnOptionWithText(firstOption)
-                .checkOptionWithTextClicked(firstOption)
-                .clickOnOptionWithText(secondOption)
+        PostCard currentPost = PostCard.getPostWithText(POST);
+        currentPost.clickOnOptionWithText(FIRST_OPTION)
+                .checkOptionWithTextClicked(FIRST_OPTION)
+                .clickOnOptionWithText(SECOND_OPTION)
                 .verifyVote()
-                .checkOptionWithTextClicked(secondOption);
+                .checkOptionWithTextClicked(SECOND_OPTION);
 
-        currentPost.clickOnOptionWithText(secondOption).verifyVote(); // сброс
+        currentPost.clickOnOptionWithText(SECOND_OPTION).verifyVote(); // сброс
     }
 
     private static Stream<Arguments> randomTitleProvider() throws IOException {
