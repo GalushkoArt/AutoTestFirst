@@ -19,6 +19,10 @@ public abstract class HelperBase {
      */
 
     public PersonPage openHomePage() {
+        /*Если что-то прервётся,
+        то пост с локацией будет предложено продолжить
+        т.к сохраняет в куки*/
+        Selenide.clearBrowserCookies();
         Selenide.open("/");
         return new PersonPage();
     }

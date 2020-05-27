@@ -7,3 +7,4 @@
 *.class
 *.properties
 *.jar
+/src/main/resources/
