@@ -1,7 +1,6 @@
 package tests;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.GroupListPage;
 
@@ -15,18 +14,15 @@ public class CreationGroupTest extends TestBase{
     }
 
     @Test
-    public void createGroupTest(){
+    public void createGroupTest() throws InterruptedException {
         groupListPage
                 .openGroupListPage()
                 .clickOnCreateNewCroupButton()
                 .choseTypeOfGroup()
                 .completionInfoAboutGroup()
                 .done();
+        groupListPage
+                .deleteGroup()
+                .done();
     }
-
-//    @Test
-//    public void deleteGroupTest(){
-//        groupListPage.deleteGroup();
-//    }
-
 }

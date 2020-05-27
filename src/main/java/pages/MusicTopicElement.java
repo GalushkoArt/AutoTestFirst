@@ -6,7 +6,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.element;
 import static org.openqa.selenium.By.xpath;
 
-public class MusicCard extends BaseTopic {
+public class MusicTopicElement extends BaseTopic {
 
     private static final By ADD_MUSIC_BUTTON = xpath(".//div[text() = 'Add music']");
     private static final By MUSIC = xpath(".//div[contains(@class, 'track-two-lines_hld')]"); // вытаскивает 1-ю аудио
@@ -16,7 +16,7 @@ public class MusicCard extends BaseTopic {
     private By musicNameInFeed;
     private By musicByName;
 
-    public MusicCard(String musicName) {
+    public MusicTopicElement(String musicName) {
         this.musicName = musicName;
         this.musicNameInFeed = xpath(".//a[text()='" + musicName + "']");
         this.musicByName = xpath(".//span[text()='" + musicName +"']");
@@ -26,28 +26,23 @@ public class MusicCard extends BaseTopic {
         return musicNameInFeed;
     }
 
-    public MusicCard getMusicLayer(){
+    public MusicTopicElement getMusicLayer(){
         selectNewTopicWindows();
         if(isOpendTopicWindow()){
-            element(ADD_MUSIC_BUTTON).click();
+            $(ADD_MUSIC_BUTTON).click();
         }
         return this;
     }
 
-    public MusicCard choseMusic(){
+    public MusicTopicElement choseMusic(){
 //        element(MUSIC).click(); // если нужна 1-я аудио
-        element(musicByName).click(); // если нужна конкретная по имени
-        element(ADD_MUSCI).click();
+        $(musicByName).click(); // если нужна конкретная по имени
+        $(ADD_MUSCI).click();
         return this;
     }
 
-    public MusicCard shareMusic() throws Exception {
+    public MusicTopicElement shareMusic() throws Exception {
         shareTopic();
-        return this;
-    }
-
-    public MusicCard findMusicTopic(){
-        findTopic(musicName);
         return this;
     }
 }

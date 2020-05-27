@@ -12,6 +12,8 @@ public abstract class BaseTopic {
 
     private static final By NEW_TOPIC_WINDOW = xpath(".//div[text() = 'Create a new topic']");
     private static final By SHARE_BUTTON = xpath(".//div[contains(@data-moderate,'Send for moderation')]");
+    private static final By TOP_OF_THE_GROUP_FEED = xpath(".//div[contains(@class,'feed_ac')]");
+    public static final By FIRST_POST_IN_GROUP_FEED = By.xpath(".//i[contains(@class, 'ic_delete')]");
 
     protected BaseTopic selectNewTopicWindows(){
         element(NEW_TOPIC_WINDOW).click();
@@ -33,5 +35,10 @@ public abstract class BaseTopic {
     protected BaseTopic findTopic(String nameTopic){
         PostCard currentPost = PostCard.getPostWithText(nameTopic);
         return this;
+    }
+
+    public void deleteFirstTopic(){
+        $(TOP_OF_THE_GROUP_FEED).scrollTo().hover().click();
+        $(FIRST_POST_IN_GROUP_FEED).hover().click();
     }
 }

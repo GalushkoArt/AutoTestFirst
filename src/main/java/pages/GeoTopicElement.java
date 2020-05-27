@@ -1,15 +1,12 @@
 package pages;
 
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
-import com.google.gson.internal.$Gson$Types;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.element;
 import static org.openqa.selenium.By.xpath;
 
-public class GeoCard extends BaseTopic{
+public class GeoTopicElement extends BaseTopic{
     private static final By GEO_BUTTON = xpath(".//div[text() = 'Add location']");
     private static final By SEARCH_FIELD = xpath(".//input[contains(@placeholder,'Location name')]");
     private static final By PLACE_LIST = xpath(".//div[contains(@class,'posting-map_toolbar')]");
@@ -19,11 +16,11 @@ public class GeoCard extends BaseTopic{
     String place;
     private By placeInFeed;
 
-    public GeoCard(String place) {
+    public GeoTopicElement(String place) {
         this.place = place;
     }
 
-    public GeoCard getGeoLayer(){
+    public GeoTopicElement getGeoLayer(){
         selectNewTopicWindows();
         if(isOpendTopicWindow()){
             element(GEO_BUTTON).click();
@@ -31,19 +28,19 @@ public class GeoCard extends BaseTopic{
         return this;
     }
 
-    public GeoCard chosePlace(){
+    public GeoTopicElement chosePlace(){
         $(SEARCH_FIELD).sendKeys(place);
         $(PLACE_LIST).findAll(PLACE_ITEMS_LOCATOR).first().click();
 
         return this;
     }
 
-    public GeoCard confirmPlace(){
+    public GeoTopicElement confirmPlace(){
         $(DONE_BUUTOM).click();
         return this;
     }
 
-    public GeoCard shareGeo() throws Exception {
+    public GeoTopicElement shareGeo() throws Exception {
         shareTopic();
         return this;
     }
