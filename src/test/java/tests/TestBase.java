@@ -1,30 +1,42 @@
 package tests;
 
+import com.codeborne.selenide.Configuration;
+import model.BotFactory;
 import model.TestBot;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import pages.LoginPage;
+import pages.PersonPage;
 
-import java.util.concurrent.TimeUnit;
+import static com.codeborne.selenide.Configuration.baseUrl;
+import static com.codeborne.selenide.Configuration.browser;
+import static com.codeborne.selenide.Selenide.closeWindow;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
+import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 
 public abstract class TestBase {
-    protected static WebDriver driver;
-    protected static String baseUrl;
-    protected TestBot bot;
+    protected static TestBot bot;
 
     @BeforeAll
     public static void setUp() {
-        init();
+        browser = "chrome";
+        Configuration.timeout = 5000;
+        baseUrl = "https://ok.ru/";
+        bot = BotFactory.getOkBot();
+        new PersonPage().openHomePage();
+        new LoginPage().logIn(bot);
     }
 
-    private static void init() {
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    protected static String getRandomString() {
+        return randomAlphanumeric(5, 40);
+    }
+
+    protected static String getRandomNumber() {
+        return randomNumeric(2, 9);
     }
 
     @AfterAll
-    public static void turnOff() {
-        driver.quit();
+    public static void turnDown() {
+        closeWindow();
     }
 }
