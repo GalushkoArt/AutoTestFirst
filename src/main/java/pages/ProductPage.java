@@ -1,5 +1,6 @@
 package pages;
 
+import cards.NewProductCard;
 import org.openqa.selenium.By;
 
 import static org.openqa.selenium.By.xpath;

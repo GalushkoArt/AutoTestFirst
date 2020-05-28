@@ -1,5 +1,7 @@
 package pages;
 
+import cards.NewCatalogCard;
+import cards.NewProductCard;
 import org.openqa.selenium.By;
 
 import static java.lang.String.format;

@@ -3,8 +3,8 @@ package tests;
 import org.junit.jupiter.api.Test;
 import pages.GroupPage;
 import pages.GroupsPage;
-import pages.NewGroupCard;
-import pages.NewGroupCard.groupTypes;
+import cards.NewGroupCard;
+import cards.NewGroupCard.groupTypes;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;

@@ -1,6 +1,10 @@
-package pages;
+package cards;
 
 import org.openqa.selenium.By;
+import pages.GeoTopicPage;
+import pages.GroupPage;
+import pages.MusicSectionPage;
+import pages.VideoSectionPage;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
@@ -40,8 +44,8 @@ public class NewTopicCard extends BaseCard {
 
     public NewTopicCard addGeoWithPlace(String place) {
         click(ADD_GEO_BUTTON);
-        new GeoTopicPage(place)
-                .chosePlace()
+        new GeoTopicPage()
+                .chosePlace(place)
                 .confirmPlace();
         return this;
     }

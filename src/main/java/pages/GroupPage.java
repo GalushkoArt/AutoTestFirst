@@ -1,12 +1,13 @@
 package pages;
 
+import cards.NewTopicCard;
 import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
 import static java.lang.String.format;
 import static org.openqa.selenium.By.xpath;
-import static pages.NewTopicCard.CREATE_TOPIC_CARD;
+import static cards.NewTopicCard.CREATE_TOPIC_CARD;
 
 public class GroupPage extends HelperBase {
 

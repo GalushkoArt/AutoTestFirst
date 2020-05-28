@@ -1,7 +1,8 @@
-package pages;
+package cards;
 
 import com.google.common.collect.ImmutableMap;
 import org.openqa.selenium.By;
+import pages.GroupPage;
 
 import java.util.Map;
 
@@ -11,7 +12,6 @@ import static org.openqa.selenium.By.xpath;
 
 public class NewGroupCard extends BaseCard {
     private static final String GROUP_TYPE_WITH_DATA = ".//*[contains(@data-l, 'createGroupDialog')]//*[contains(@data-l, \"%s\")]";
-    private static final String GROUP_CATEGORY_WITH_TEXT = ".//option[contains(text(), \"%s\")]";
 
     private static final By GROUP_NAME_FIELD = xpath(".//input[contains(@id, 'field_name')]");
     private static final By GROUP_DESCRIPTION_FIELD = xpath(".//*[contains(@id, 'field_description')]");

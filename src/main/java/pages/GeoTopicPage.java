@@ -1,5 +1,6 @@
 package pages;
 
+import cards.NewTopicCard;
 import org.openqa.selenium.By;
 
 import static org.openqa.selenium.By.xpath;
@@ -10,13 +11,7 @@ public class GeoTopicPage extends HelperBase {
     public static final By PLACE_ITEM = xpath(".//li[@class= 'suggest_li']");
     public static final By DONE_BUUTON = xpath(".//a[@data-id='done']");
 
-    private String place;
-
-    public GeoTopicPage(String place) {
-        this.place = place;
-    }
-
-    public GeoTopicPage chosePlace() {
+    public GeoTopicPage chosePlace(String place) {
         type(SEARCH_FIELD, place);
         chooseFirstElementInList(PLACE_ITEM, PLACE_LIST);
         return this;

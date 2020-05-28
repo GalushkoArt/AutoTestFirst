@@ -1,7 +1,8 @@
-package pages;
+package cards;
 
 
 import org.openqa.selenium.By;
+import pages.GroupProductsPage;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static org.openqa.selenium.By.xpath;

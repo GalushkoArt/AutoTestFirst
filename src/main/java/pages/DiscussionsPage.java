@@ -1,5 +1,6 @@
 package pages;
 
+import cards.MessageCard;
 import com.codeborne.selenide.ElementsCollection;
 import org.openqa.selenium.By;
 

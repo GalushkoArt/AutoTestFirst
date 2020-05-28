@@ -1,4 +1,4 @@
-package pages;
+package cards;
 
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
@@ -11,7 +11,7 @@ public class MessageCard extends BaseCard {
     private static final By REMOVE_BUTTON = xpath(".//*[contains(@class, 'comment_act')]//*[contains(@class, 'close')]");
     private static final By REMOVE_CONFIRM_BUTTON = xpath(".//input[@type = 'button']");
 
-    MessageCard(SelenideElement element) {
+    public MessageCard(SelenideElement element) {
         super(element);
     }
 

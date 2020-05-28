@@ -1,5 +1,6 @@
 package pages;
 
+import cards.NewTopicCard;
 import org.openqa.selenium.By;
 
 import static java.lang.String.format;

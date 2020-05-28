@@ -1,8 +1,10 @@
-package pages;
+package cards;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+import pages.DiscussionsPage;
+import pages.PostPage;
 
 import static com.codeborne.selenide.Selenide.*;
 import static java.lang.String.format;
