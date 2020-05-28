@@ -3,7 +3,7 @@ package pages;
 import com.codeborne.selenide.ElementsCollection;
 import org.openqa.selenium.By;
 
-public class FriendsPage extends HelperBase {
+public class FriendsPage extends BasePage {
 
     public static final By FRIEND_LIST = By.xpath(".//ul[@class = \"ugrid_cnt\"]//li[@class=\"ugrid_i\"]");
     public static final By FRIENDS_NAME = By.xpath(".//*[@class = \"ugrid_cnt\"]//*[@class=\"ucard-w_t ellip-i\"]");

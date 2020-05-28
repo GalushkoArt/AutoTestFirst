@@ -54,6 +54,11 @@ public abstract class BaseCard {
         return this;
     }
 
+    public BaseCard scrollTo() {
+        element.scrollTo();
+        return this;
+    }
+
     public boolean isExists(By locator) {
         waitUntilShows(locator);
         return element.$(locator).exists();
@@ -83,7 +88,6 @@ public abstract class BaseCard {
     }
 
     public String getText(By locator) {
-        waitUntilShows(locator);
-        return element.$(locator).getText();
+        return element.$(locator).isDisplayed() ? element.$(locator).getText() : "";
     }
 }

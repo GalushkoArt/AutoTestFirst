@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 
 import static org.openqa.selenium.By.xpath;
 
-public class ProductPage extends HelperBase {
+public class ProductPage extends BasePage {
     private static final By PRODUCT_TITLE = By.xpath(".//div[@class='product-layer_n textWrap']");
     private static final By PRODUCT_DESCRIPTION = By.xpath(".//div[@class='product-layer_description_tx']");
     private static final By PRODUCT_PRICE = By.xpath(".//div[@class='media-price_cnt']");

@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import static com.codeborne.selenide.Selenide.$$;
 import static org.openqa.selenium.By.xpath;
 
-public class DiscussionsPage extends HelperBase {
+public class DiscussionsPage extends BasePage {
     private static final By TEXT_FIELD = xpath(".//*[@contenteditable = 'true']");
     private static final By SEND_BUTTTON = xpath(".//*[@uid = 'sendComment']");
     private static final By CLOSE_BUTTON = xpath(".//*[@uid = 'closeDisc']");

@@ -4,7 +4,7 @@ import model.TestBot;
 import org.openqa.selenium.By;
 
 
-public class LoginPage extends HelperBase {
+public class LoginPage extends BasePage {
 
     public static final By FIELD_EMAIL = By.cssSelector("input#field_email");
     public static final By FIELD_PASSWORD = By.cssSelector("input#field_password");

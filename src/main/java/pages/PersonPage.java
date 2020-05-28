@@ -2,7 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 
-public class PersonPage extends HelperBase {
+public class PersonPage extends BasePage {
     private static final By FRIENDSHIP_BUTTON = By.xpath(".//*[@data-l=\"t,invite\"]");
     private static final By REQUEST_BUTTON = By.xpath(".//div[contains(@class, \"dropdown h-mod\")]");
     private static final By REVOKED_FRIENDSHIP = By.xpath(".//a[contains(@href, \"act=REVOKE\")]");

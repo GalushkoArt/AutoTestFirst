@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 import static java.lang.String.format;
 import static org.openqa.selenium.By.xpath;
 
-public class GroupProductsPage extends HelperBase {
+public class GroupProductsPage extends BasePage {
     private static final String CATALOG_WITH_NAME = ".//div[@class='market-album soh-s']//a[@title=\"%s\"]";
     private static final String PRODUCT_WITH_TITLE = ".//div[@class='market-card_n']//a[text()=\"%s\"]";
     private static final By PLACE_BUTTON = xpath(".//a[contains(@class, 'button') and contains(@href, 'post')]");

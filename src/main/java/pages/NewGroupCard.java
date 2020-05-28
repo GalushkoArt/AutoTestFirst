@@ -5,11 +5,10 @@ import org.openqa.selenium.By;
 
 import java.util.Map;
 
-import static com.codeborne.selenide.Selenide.$;
 import static java.lang.String.format;
 import static org.openqa.selenium.By.xpath;
 
-public class NewGroupCard extends BaseCard {
+public class NewGroupCard extends BasePage {
     private static final String GROUP_TYPE_WITH_DATA = ".//*[contains(@data-l, 'createGroupDialog')]//*[contains(@data-l, \"%s\")]";
     private static final String GROUP_CATEGORY_WITH_TEXT = ".//option[contains(text(), \"%s\")]";
 
@@ -40,8 +39,6 @@ public class NewGroupCard extends BaseCard {
             .put(groupTypes.ANNOUNCEMENT,  "BOARD")
             .put(groupTypes.SHOP,          "SHOP")
             .build();
-
-    public NewGroupCard() { super($(CREATE_GROUP_CARD)); }
 
     public NewGroupCard chooseGroupType(groupTypes type) {
         String typeString = GROUP_TYPES_STRINGS.get(type);

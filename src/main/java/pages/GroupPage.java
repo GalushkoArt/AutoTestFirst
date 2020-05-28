@@ -3,12 +3,10 @@ package pages;
 import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Selenide.$;
-import static java.lang.String.format;
 import static org.openqa.selenium.By.xpath;
 import static pages.NewTopicCard.CREATE_TOPIC_CARD;
 
-public class GroupPage extends HelperBase {
+public class GroupPage extends BasePage {
 
     private static final String OPTION_WITH_TEXT = ".//*[contains(@class, 'u-menu_li') and .//*[contains(text(), \"%s\")]]";
 
@@ -31,6 +29,10 @@ public class GroupPage extends HelperBase {
     public GroupPage openGroupPage(String groupID) {
         Selenide.open("/group/" + groupID);
         return new GroupPage();
+    }
+
+    public PostCard getPostWithText(String text) {
+        return PostHelper.getPostWithText(text);
     }
 
     public NewTopicCard pressCreateTopic() {

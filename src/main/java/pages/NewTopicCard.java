@@ -7,7 +7,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static org.openqa.selenium.By.cssSelector;
 import static org.openqa.selenium.By.xpath;
 
-public class NewTopicCard extends BaseCard {
+public class NewTopicCard extends BasePage {
 
     private static final By TEXT_FIELD = xpath(".//*[@data-module=\"postingForm/mediaText\"]");
     private static final By ADD_VIDEO_BUTTON = xpath(".//*[@data-id=\"Group_add_video\"]");
@@ -20,7 +20,7 @@ public class NewTopicCard extends BaseCard {
     public static final By CREATE_TOPIC_CARD = cssSelector("div#hook_Block_MediaTopicLayerBody");
 
     public NewTopicCard() {
-        super($(CREATE_TOPIC_CARD).scrollTo());
+        $(CREATE_TOPIC_CARD).scrollTo();
         if ($(RESTORE_DRAFT_WINDOW).isDisplayed()) {
             $(CANCEL_RESTORE).waitUntil(visible, 5000, 400);
             $(CANCEL_RESTORE).click();

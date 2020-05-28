@@ -3,10 +3,9 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
-import static com.codeborne.selenide.Selenide.$x;
 import static org.openqa.selenium.By.xpath;
 
-public class NewProductCard extends BaseCard {
+public class NewProductCard extends BasePage {
     private static final By PRODUCT_TITLE = xpath(".//input[@data-id='adHeader']");
     private static final By PRODUCT_PRICE = xpath(".//input[@data-id='adPrice']");
     private static final By PRODUCT_DESCRIPTION = xpath(".//div[@data-module='postingForm/mediaText']");
@@ -16,9 +15,6 @@ public class NewProductCard extends BaseCard {
     private static final By DELETE_CATALOG_BUTTON = xpath(".//i[contains(@title,'deleteFriend')]");
     private static final By SHARE_BUTTON = xpath(".//div[@data-action='submit']");
 
-    public NewProductCard() {
-        super($x(".//div[@data-module='MediaTopicAdvertLayerBody']"));
-    }
 
     public NewProductCard typeTitle(String title) {
         type(PRODUCT_TITLE, title);

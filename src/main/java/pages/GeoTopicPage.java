@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 
 import static org.openqa.selenium.By.xpath;
 
-public class GeoTopicPage extends HelperBase {
+public class GeoTopicPage extends BasePage {
     private static final By SEARCH_FIELD = xpath(".//input[contains(@placeholder,'Location name')]");
     private static final By PLACE_LIST = xpath(".//div[contains(@class,'posting-map_toolbar')]");
     public static final By PLACE_ITEM = xpath(".//li[@class= 'suggest_li']");

@@ -4,13 +4,14 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 
 import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Selenide.*;
 import static java.lang.String.format;
 
-public abstract class HelperBase {
+public abstract class BasePage {
     protected static String linkWithTextSelector = ".//a[text()=\"%s\"]";
 
     /**
@@ -29,12 +30,14 @@ public abstract class HelperBase {
      * @return current page
      */
 
-    protected HelperBase hover(By locator) {
+    protected BasePage hover(By locator) {
+        waitUntilShows(locator);
         $(locator).hover();
         return this;
     }
 
-    protected HelperBase click(By locator) {
+    protected BasePage click(By locator) {
+        waitUntilShows(locator);
         $(locator).click();
         return this;
     }
@@ -46,8 +49,16 @@ public abstract class HelperBase {
      * @return current page
      */
 
-    protected HelperBase type(By locator, String text) {
+    protected BasePage type(By locator, String text) {
+        waitUntilShows(locator);
         $(locator).sendKeys(text);
+        return this;
+    }
+
+    public BasePage sendKey(By locator, Keys key) {
+        waitUntilShows(locator);
+        $(locator).hover()
+                .sendKeys(key);
         return this;
     }
 
@@ -57,16 +68,19 @@ public abstract class HelperBase {
      * @return current page
      */
 
-    protected HelperBase clearField(By locator) {
+    protected BasePage clearField(By locator) {
+        waitUntilShows(locator);
         $(locator).clear();
         return this;
     }
 
     protected String getText(By locator) {
+        waitUntilShows(locator);
         return $(locator).getText();
     }
 
-    protected HelperBase scrollToElement(By locator) {
+    protected BasePage scrollToElement(By locator) {
+        waitUntilShows(locator);
         $(locator).scrollTo();
         return this;
     }
@@ -77,6 +91,7 @@ public abstract class HelperBase {
      */
 
     protected boolean isElementDisplayed(By locator) {
+        waitUntilShows(locator);
         return $(locator).isDisplayed();
     }
 
@@ -96,7 +111,7 @@ public abstract class HelperBase {
      * @return current page
      */
 
-    protected HelperBase waitUntilDisappear(By locator) {
+    protected BasePage waitUntilDisappear(By locator) {
         $(locator).waitUntil(disappear, 10000, 400);
         return this;
     }
@@ -108,7 +123,7 @@ public abstract class HelperBase {
      * @return current page
      */
 
-    protected HelperBase waitUntilDisappear(By locator, int seconds) {
+    protected BasePage waitUntilDisappear(By locator, int seconds) {
         $(locator).waitUntil(disappear, 1000*seconds, 400);
         return this;
     }
@@ -120,7 +135,7 @@ public abstract class HelperBase {
      * @return current page
      */
 
-    protected HelperBase waitUntilShows(By locator) {
+    protected BasePage waitUntilShows(By locator) {
         $(locator).waitUntil(appear, 5000, 400);
         return this;
     }
@@ -133,7 +148,7 @@ public abstract class HelperBase {
      * @return current page
      */
 
-    protected HelperBase waitUntilShows(By locator, int seconds) {
+    protected BasePage waitUntilShows(By locator, int seconds) {
         $(locator).waitUntil(appear, 1000*seconds, 400);
         return this;
     }
@@ -148,7 +163,7 @@ public abstract class HelperBase {
         return $x(format(linkWithTextSelector, text));
     }
 
-    protected HelperBase chooseFirstElementInList(By element, By list) {
+    protected BasePage chooseFirstElementInList(By element, By list) {
         $(list).findAll(element)
                 .first()
                 .click();

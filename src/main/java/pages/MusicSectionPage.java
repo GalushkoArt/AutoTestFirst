@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 import static java.lang.String.format;
 import static org.openqa.selenium.By.xpath;
 
-public class MusicSectionPage extends HelperBase {
+public class MusicSectionPage extends BasePage {
     private static final By MUSIC = xpath(".//div[contains(@class, 'track-two-lines_hld')]"); // вытаскивает 1-ю аудио
     private static final By ADD_MUSIC = xpath(".//a[text()= 'Add']");
 

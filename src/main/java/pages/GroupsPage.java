@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 import static org.openqa.selenium.By.xpath;
 import static pages.NewGroupCard.CREATE_GROUP_CARD;
 
-public class GroupsPage extends HelperBase {
+public class GroupsPage extends BasePage {
     private static final By CREATE_GROUP_BUTTON = xpath(".//*[@class = 'create-group']");
 
     public static GroupsPage openGroupsPage() {

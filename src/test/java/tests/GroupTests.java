@@ -33,7 +33,7 @@ public class GroupTests extends TestBase {
         final String SECOND_OPTION = "Нет";
 
         GroupPage currentPage = new GroupPage().openGroupPage(GROUP_ID);
-        PostCard currentPost = PostCard.getPostWithText(POST);
+        PostCard currentPost = currentPage.getPostWithText(POST);
         currentPost.clickOnOptionWithText(FIRST_OPTION)
                 .checkOptionWithTextClicked(FIRST_OPTION)
                 .clickOnOptionWithText(SECOND_OPTION)
@@ -62,7 +62,7 @@ public class GroupTests extends TestBase {
                 .addVideoWithTitle(title)
                 .sharePost();
 
-        PostCard post = PostCard.getPostWithText(TEXT);
+        PostCard post = currentPage.getPostWithText(TEXT);
         assertThat(post.getVideoTitle(), equalTo(title));
 
         post.getPostPage()      // сброс
@@ -80,7 +80,7 @@ public class GroupTests extends TestBase {
                 .addGeoWithPlace(PLACE)
                 .sharePost();
 
-        PostCard post = PostCard.getPostWithText(TEXT);
+        PostCard post = currentPage.getPostWithText(TEXT);
         assertTrue(post.hasPlaceMap());
         assertThat(post.getPostText(), equalTo(TEXT));
 
@@ -99,7 +99,7 @@ public class GroupTests extends TestBase {
                 .addMusicWithName(MUSIC)
                 .sharePost();
 
-        PostCard post = PostCard.getPostWithText(TEXT);
+        PostCard post = currentPage.getPostWithText(TEXT);
         assertThat(post.getPostText(), equalTo(TEXT));
         assertThat(post.getMusicNameOfPost(), equalTo(MUSIC));
 
@@ -113,7 +113,7 @@ public class GroupTests extends TestBase {
         final String MESSAGE = getRandomString();
 
         GroupPage currentPage = new GroupPage().openGroupPage(GROUP_ID);
-        PostCard currentPost = PostCard.getPostWithText(POST);
+        PostCard currentPost = currentPage.getPostWithText(POST);
 
         DiscussionsPage currentDiscussion = currentPost.openComments();
         List<MessageCard> messages = currentDiscussion.typeMessage(MESSAGE)
