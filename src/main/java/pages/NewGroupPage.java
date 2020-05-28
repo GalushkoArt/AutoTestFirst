@@ -8,7 +8,7 @@ import java.util.Map;
 import static java.lang.String.format;
 import static org.openqa.selenium.By.xpath;
 
-public class NewGroupCard extends BasePage {
+public class NewGroupPage extends BasePage {
     private static final String GROUP_TYPE_WITH_DATA = ".//*[contains(@data-l, 'createGroupDialog')]//*[contains(@data-l, \"%s\")]";
     private static final String GROUP_CATEGORY_WITH_TEXT = ".//option[contains(text(), \"%s\")]";
 
@@ -40,19 +40,19 @@ public class NewGroupCard extends BasePage {
             .put(groupTypes.SHOP,          "SHOP")
             .build();
 
-    public NewGroupCard chooseGroupType(groupTypes type) {
+    public NewGroupPage chooseGroupType(groupTypes type) {
         String typeString = GROUP_TYPES_STRINGS.get(type);
         By locator = xpath(format(GROUP_TYPE_WITH_DATA, typeString));
         click(locator);
         return this;
     }
 
-    public NewGroupCard typeGroupName(String name) {
+    public NewGroupPage typeGroupName(String name) {
         type(GROUP_NAME_FIELD, name);
         return this;
     }
 
-    public NewGroupCard typeGroupDescription(String description) {
+    public NewGroupPage typeGroupDescription(String description) {
         type(GROUP_DESCRIPTION_FIELD, description);
         return this;
     }

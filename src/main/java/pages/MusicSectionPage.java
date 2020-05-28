@@ -23,15 +23,15 @@ public class MusicSectionPage extends BasePage {
         return getText(musicNameInFeed);
     }
 
-    public NewTopicCard choseMusicWithName() {
+    public NewTopicPage choseMusicWithName() {
         click(musicByName);
         click(ADD_MUSIC);
-        return new NewTopicCard();
+        return new NewTopicPage();
     }
 
-    public NewTopicCard choseFirstMusic() {
+    public NewTopicPage choseFirstMusic() {
         click(MUSIC);
         click(ADD_MUSIC);
-        return new NewTopicCard();
+        return new NewTopicPage();
     }
 }

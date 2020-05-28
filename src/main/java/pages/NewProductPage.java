@@ -5,7 +5,7 @@ import org.openqa.selenium.Keys;
 
 import static org.openqa.selenium.By.xpath;
 
-public class NewProductCard extends BasePage {
+public class NewProductPage extends BasePage {
     private static final By PRODUCT_TITLE = xpath(".//input[@data-id='adHeader']");
     private static final By PRODUCT_PRICE = xpath(".//input[@data-id='adPrice']");
     private static final By PRODUCT_DESCRIPTION = xpath(".//div[@data-module='postingForm/mediaText']");
@@ -16,39 +16,39 @@ public class NewProductCard extends BasePage {
     private static final By SHARE_BUTTON = xpath(".//div[@data-action='submit']");
 
 
-    public NewProductCard typeTitle(String title) {
+    public NewProductPage typeTitle(String title) {
         type(PRODUCT_TITLE, title);
         return this;
     }
 
-    public NewProductCard typePrice(String price) {
+    public NewProductPage typePrice(String price) {
         type(PRODUCT_PRICE, price);
         return this;
     }
 
-    public NewProductCard typeDescription(String description) {
+    public NewProductPage typeDescription(String description) {
         type(PRODUCT_DESCRIPTION, description);
         return this;
     }
 
-    public NewProductCard typeCatalog(String catalog) {
+    public NewProductPage typeCatalog(String catalog) {
         type(PRODUCT_CATALOG, catalog);
         sendKey(PRODUCT_CATALOG, Keys.ENTER);
         waitUntilShows(DELETE_CATALOG_BUTTON);
         return this;
     }
 
-    public NewProductCard deleteCatalog() {
+    public NewProductPage deleteCatalog() {
         click(DELETE_CATALOG_BUTTON);
         return this;
     }
 
-    public NewProductCard clickPickupDelivery() {
+    public NewProductPage clickPickupDelivery() {
         click(PRODUCT_PICKUP_DELIVERY);
         return this;
     }
 
-    public NewProductCard clickMailDelivery() {
+    public NewProductPage clickMailDelivery() {
         click(PRODUCT_MAIL_DELIVERY);
         return this;
     }

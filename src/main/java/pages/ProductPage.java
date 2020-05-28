@@ -44,12 +44,12 @@ public class ProductPage extends BasePage {
         return this;
     }
 
-    public NewProductCard editProduct() {
+    public NewProductPage editProduct() {
         waitUntilShows(PRODUCT_OPTIONS);
         click(PRODUCT_OPTIONS);
         waitUntilShows(EDIT_PRODUCT_BUTTON);
         click(EDIT_PRODUCT_BUTTON);
         waitUntilDisappear(EDIT_PRODUCT_BUTTON);
-        return new NewProductCard();
+        return new NewProductPage();
     }
 }

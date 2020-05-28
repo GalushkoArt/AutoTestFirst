@@ -22,8 +22,8 @@ public class GeoTopicPage extends BasePage {
         return this;
     }
 
-    public NewTopicCard confirmPlace(){
+    public NewTopicPage confirmPlace(){
         click(DONE_BUUTON);
-        return new NewTopicCard();
+        return new NewTopicPage();
     }
 }

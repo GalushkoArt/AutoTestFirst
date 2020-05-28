@@ -19,14 +19,14 @@ public class GroupProductsPage extends BasePage {
         return new ProductPage();
     }
 
-    public NewProductCard clickPlaceButton() {
+    public NewProductPage clickPlaceButton() {
         click(PLACE_BUTTON);
-        return new NewProductCard();
+        return new NewProductPage();
     }
 
-    public NewCatalogCard clickCreateCatalog() {
+    public NewCatalogPage clickCreateCatalog() {
         click(CREATE_CATALOG_BUTTON);
-        return new NewCatalogCard();
+        return new NewCatalogPage();
     }
 
     public CatalogPage clickOnCatalogWithName(String name) {

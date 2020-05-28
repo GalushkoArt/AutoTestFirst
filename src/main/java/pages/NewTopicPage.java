@@ -7,7 +7,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static org.openqa.selenium.By.cssSelector;
 import static org.openqa.selenium.By.xpath;
 
-public class NewTopicCard extends BasePage {
+public class NewTopicPage extends BasePage {
 
     private static final By TEXT_FIELD = xpath(".//*[@data-module=\"postingForm/mediaText\"]");
     private static final By ADD_VIDEO_BUTTON = xpath(".//*[@data-id=\"Group_add_video\"]");
@@ -19,7 +19,7 @@ public class NewTopicCard extends BasePage {
     private static final By CANCEL_RESTORE = xpath(".//*[@data-js-cancel='1']");
     public static final By CREATE_TOPIC_CARD = cssSelector("div#hook_Block_MediaTopicLayerBody");
 
-    public NewTopicCard() {
+    public NewTopicPage() {
         $(CREATE_TOPIC_CARD).scrollTo();
         if ($(RESTORE_DRAFT_WINDOW).isDisplayed()) {
             $(CANCEL_RESTORE).waitUntil(visible, 5000, 400);
@@ -27,18 +27,18 @@ public class NewTopicCard extends BasePage {
         }
     }
 
-    public NewTopicCard typeTopicText(String text) {
+    public NewTopicPage typeTopicText(String text) {
         type(TEXT_FIELD, text);
         return this;
     }
 
-    public NewTopicCard addVideoWithTitle(String title) {
+    public NewTopicPage addVideoWithTitle(String title) {
         click(ADD_VIDEO_BUTTON);
         new VideoSectionPage().addVideoWithTitle(title);
         return this;
     }
 
-    public NewTopicCard addGeoWithPlace(String place) {
+    public NewTopicPage addGeoWithPlace(String place) {
         click(ADD_GEO_BUTTON);
         new GeoTopicPage(place)
                 .chosePlace()
@@ -46,7 +46,7 @@ public class NewTopicCard extends BasePage {
         return this;
     }
 
-    public NewTopicCard addMusicWithName(String name) {
+    public NewTopicPage addMusicWithName(String name) {
         click(ADD_MUSIC_BUTTON);
         new MusicSectionPage(name).choseMusicWithName();
         return this;

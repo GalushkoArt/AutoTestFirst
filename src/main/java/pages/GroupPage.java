@@ -4,7 +4,7 @@ import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
 
 import static org.openqa.selenium.By.xpath;
-import static pages.NewTopicCard.CREATE_TOPIC_CARD;
+import static pages.NewTopicPage.CREATE_TOPIC_CARD;
 
 public class GroupPage extends BasePage {
 
@@ -35,10 +35,10 @@ public class GroupPage extends BasePage {
         return PostHelper.getPostWithText(text);
     }
 
-    public NewTopicCard pressCreateTopic() {
+    public NewTopicPage pressCreateTopic() {
         click(CREATE_TOPIC_FIELD);
         waitUntilShows(CREATE_TOPIC_CARD);
-        return new NewTopicCard();
+        return new NewTopicPage();
     }
 
     public GroupProductsPage goToProducts() {

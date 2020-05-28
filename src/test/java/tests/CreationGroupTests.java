@@ -3,8 +3,8 @@ package tests;
 import org.junit.jupiter.api.Test;
 import pages.GroupPage;
 import pages.GroupsPage;
-import pages.NewGroupCard;
-import pages.NewGroupCard.groupTypes;
+import pages.NewGroupPage;
+import pages.NewGroupPage.groupTypes;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -17,7 +17,7 @@ public class CreationGroupTests extends TestBase {
         final String GROUP_NAME = getRandomString();
         final String GROUP_DESCRIPTION = getRandomString();
 
-        NewGroupCard card = GroupsPage.openGroupsPage().pressCreateGroup();
+        NewGroupPage card = GroupsPage.openGroupsPage().pressCreateGroup();
         GroupPage groupPage = card.chooseGroupType(GROUP_TYPE)
                 .typeGroupName(GROUP_NAME)
                 .typeGroupDescription(GROUP_DESCRIPTION)
