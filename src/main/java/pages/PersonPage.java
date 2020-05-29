@@ -1,5 +1,6 @@
 package pages;
 
+import factory.FriendsPageFactory;
 import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,11 +21,11 @@ public class PersonPage extends BasePage {
      * @return new FriendsPage
      */
 
-    public FriendsPage goToMenuFriends() {
+    public MyFriendsPage goToMenuFriends() {
         click(GO_TO_FREAND_PAGE);
         waitUntilShows(FriendsPage.FRIENDS_PAGE);
         logger.info("Went to person friends page");
-        return new FriendsPage();
+        return new MyFriendsPage();
     }
 
     /**
@@ -67,10 +68,10 @@ public class PersonPage extends BasePage {
      * @return new FriendsPage
      */
 
-    public FriendsPage goToFriends() {
+    public BaseFriendsPage goToFriends() {
         click(FREAND_LIST);
         waitUntilShows(FriendsPage.FRIENDS_PAGE);
         logger.info("Went to persons friends page");
-        return new FriendsPage();
+        return FriendsPageFactory.getFriendsPage();
     }
 }
