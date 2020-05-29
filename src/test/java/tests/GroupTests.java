@@ -37,7 +37,7 @@ public class GroupTests extends TestBase {
 
         logger.info("Run voting test for {} post with {} and {} options", POST, FIRST_OPTION, SECOND_OPTION);
 
-        GroupPage currentPage = new GroupPage().openGroupPage(GROUP_ID);
+        GroupPage currentPage = new GroupPage().openGroupTopicsPage(GROUP_ID);
         PostCard currentPost = currentPage.getPostWithText(POST);
         currentPost.clickOnOptionWithText(FIRST_OPTION)
                 .checkOptionWithTextClicked(FIRST_OPTION)
@@ -133,7 +133,7 @@ public class GroupTests extends TestBase {
 
         logger.info("Run commenting {} post with {} message test", POST, MESSAGE);
 
-        GroupPage currentPage = new GroupPage().openGroupPage(GROUP_ID);
+        GroupPage currentPage = new GroupPage().openGroupTopicsPage(GROUP_ID);
         PostCard currentPost = currentPage.getPostWithText(POST);
 
         DiscussionsPage currentDiscussion = currentPost.openComments();

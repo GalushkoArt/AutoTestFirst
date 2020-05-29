@@ -36,6 +36,12 @@ public class GroupPage extends BasePage {
         return new GroupPage();
     }
 
+    public GroupPage openGroupTopicsPage(String groupID) {
+        Selenide.open("/group/" + groupID+"/topics");
+        logger.info("Opened topics {} group", groupID);
+        return new GroupPage();
+    }
+
     public PostCard getPostWithText(String text) {
         PostCard post = PostHelper.getPostWithText(text);
         logger.info("Found post with {} text", text);
