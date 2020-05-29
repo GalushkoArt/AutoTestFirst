@@ -19,6 +19,7 @@ public class MyFriendsPage extends BaseFriendsPage {
 
     public MyFriendsPage goToSentRequests() {
         click(SENT_REQUESTS_PAGE);
+        logger.info("Went to requests section");
         return this;
     }
 }

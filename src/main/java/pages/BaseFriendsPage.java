@@ -1,10 +1,11 @@
 package pages;
 
 import com.codeborne.selenide.ElementsCollection;
-import pages.BasePage;
-import pages.PersonPage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class BaseFriendsPage extends BasePage {
+    protected static final Logger logger = LoggerFactory.getLogger(FriendsPage.class);
 
     /**
      * returns list of SelenideElement of user's friends
@@ -23,6 +24,7 @@ public abstract class BaseFriendsPage extends BasePage {
     public PersonPage clickOnPersonWithName(String firstName, String lastName) {
         findLinkWithText(firstName + " " + lastName).click();
         waitUntilShows(PersonPage.USER_PHOTO);
+        logger.info("Went to {} {} page", firstName, lastName);
         return new PersonPage();
     }
 }
