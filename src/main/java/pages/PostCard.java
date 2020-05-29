@@ -2,6 +2,8 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static java.lang.String.format;
 import static org.openqa.selenium.By.xpath;
@@ -18,6 +20,8 @@ public class PostCard extends BaseCard {
     private static final By COMMENTS_BUTTON = xpath(".//*[@data-module = 'CommentWidgets']");
     private static final By CLICKED_SELECTION = xpath(".//label[contains(@class, '__checked')]");
 
+    private static final Logger logger = LoggerFactory.getLogger(PostCard.class);
+
     protected PostCard(SelenideElement element) {
         super(element);
     }
@@ -30,6 +34,7 @@ public class PostCard extends BaseCard {
 
     public PostCard clickOnOptionWithText(String text) {
         click(xpath(format(POLL_OPTION_WITH_TEXT, text)));
+        logger.info("Clicked option with {} text", text);
         return this;
     }
 
@@ -41,6 +46,7 @@ public class PostCard extends BaseCard {
 
     public PostCard checkOptionWithTextClicked(String text) {
         verify(xpath(format(POLL_OPTION_WITH_TEXT, text)), CLICKED_SELECTION);
+        logger.info("Option {} is chosen", text);
         return this;
     }
 
@@ -51,6 +57,7 @@ public class PostCard extends BaseCard {
 
     public PostCard verifyVote() {
         click(YES_BUTTON);
+        logger.info("Vote verified");
         return this;
     }
 
@@ -59,10 +66,12 @@ public class PostCard extends BaseCard {
     }
 
     public boolean hasPlaceMap() {
+        logger.info("Asked if post has map");
         return isExists(POST_PLACE_MAP);
     }
 
     public String getVideoTitle() {
+        logger.info("Asked post video title");
         return getText(VIDEO_TITLE);
     }
 
@@ -71,16 +80,19 @@ public class PostCard extends BaseCard {
     }
 
     public String getMusicNameOfPost() {
+        logger.info("Asked post music title");
         return getText(MUSIC_TITLE);
     }
 
     public PostPage getPostPage() {
         click(POST_TEXT);
+        logger.info("Went to post page");
         return new PostPage();
     }
 
     public DiscussionsPage openComments() {
         click(COMMENTS_BUTTON);
+        logger.info("Went to discussion page of the post");
         return new DiscussionsPage();
     }
 }

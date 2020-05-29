@@ -2,6 +2,8 @@ package pages;
 
 import com.codeborne.selenide.ElementsCollection;
 import org.openqa.selenium.By;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,14 +17,18 @@ public class DiscussionsPage extends BasePage {
     private static final By CLOSE_BUTTON = xpath(".//*[@uid = 'closeDisc']");
     private static final By MESSAGE = xpath(".//*[contains(@class, 'comment') and contains(@class, 'avatar')]");
 
+    private static final Logger logger = LoggerFactory.getLogger(DiscussionsPage.class);
+
     public DiscussionsPage typeMessage(String msg) {
         waitUntilShows(TEXT_FIELD);
         type(TEXT_FIELD, msg);
+        logger.info("Typed {} message", msg);
         return this;
     }
 
     public DiscussionsPage sendMessage() {
         click(SEND_BUTTTON);
+        logger.info("Clicked send button");
         return this;
     }
 
@@ -34,6 +40,7 @@ public class DiscussionsPage extends BasePage {
     }
 
     public void close() {
+        logger.info("Clicked close button");
         click(CLOSE_BUTTON);
     }
 }

@@ -2,6 +2,8 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.openqa.selenium.By.xpath;
 
@@ -15,19 +17,23 @@ public class NewProductPage extends BasePage {
     private static final By DELETE_CATALOG_BUTTON = xpath(".//i[contains(@title,'deleteFriend')]");
     private static final By SHARE_BUTTON = xpath(".//div[@data-action='submit']");
 
+    private static final Logger logger = LoggerFactory.getLogger(NewProductPage.class);
 
     public NewProductPage typeTitle(String title) {
         type(PRODUCT_TITLE, title);
+        logger.info("Typed {} title", title);
         return this;
     }
 
     public NewProductPage typePrice(String price) {
         type(PRODUCT_PRICE, price);
+        logger.info("Typed {} price", price);
         return this;
     }
 
     public NewProductPage typeDescription(String description) {
         type(PRODUCT_DESCRIPTION, description);
+        logger.info("Typed {} description", description);
         return this;
     }
 
@@ -35,26 +41,31 @@ public class NewProductPage extends BasePage {
         type(PRODUCT_CATALOG, catalog);
         sendKey(PRODUCT_CATALOG, Keys.ENTER);
         waitUntilShows(DELETE_CATALOG_BUTTON);
+        logger.info("Typed {} catalog", catalog);
         return this;
     }
 
     public NewProductPage deleteCatalog() {
         click(DELETE_CATALOG_BUTTON);
+        logger.info("Clicked delete catalog");
         return this;
     }
 
     public NewProductPage clickPickupDelivery() {
         click(PRODUCT_PICKUP_DELIVERY);
+        logger.info("Chose pick up delivery");
         return this;
     }
 
     public NewProductPage clickMailDelivery() {
         click(PRODUCT_MAIL_DELIVERY);
+        logger.info("Chose mail delivery");
         return this;
     }
 
     public GroupProductsPage clickShare() {
         click(SHARE_BUTTON);
+        logger.info("Shared product");
         return new GroupProductsPage();
     }
 }

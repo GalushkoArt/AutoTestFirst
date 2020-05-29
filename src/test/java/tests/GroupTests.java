@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pages.*;
 import pages.MessageCard;
 
@@ -25,12 +27,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class GroupTests extends TestBase {
     private static final String GROUP_ID = "57637278384344";
+    private static final Logger logger = LoggerFactory.getLogger(GroupTests.class);
 
     @Test
     public void votingTest() {
         final String POST = "Мы все умрём?";
         final String FIRST_OPTION = "Да";
         final String SECOND_OPTION = "Нет";
+
+        logger.info("Run voting test for {} post with {} and {} options", POST, FIRST_OPTION, SECOND_OPTION);
 
         GroupPage currentPage = new GroupPage().openGroupPage(GROUP_ID);
         PostCard currentPost = currentPage.getPostWithText(POST);
@@ -39,8 +44,10 @@ public class GroupTests extends TestBase {
                 .clickOnOptionWithText(SECOND_OPTION)
                 .verifyVote()
                 .checkOptionWithTextClicked(SECOND_OPTION);
+        logger.info("Voting test successful");
 
         currentPost.clickOnOptionWithText(SECOND_OPTION).verifyVote(); // сброс
+        logger.info("Test restored");
     }
 
     private static Stream<Arguments> randomTitleProvider() throws IOException {
@@ -56,6 +63,8 @@ public class GroupTests extends TestBase {
     public void videoPostTest(String title) {
         final String TEXT = getRandomString();
 
+        logger.info("Run creating post with {} text and {} video", TEXT, title);
+
         GroupPage currentPage = new GroupPage().openGroupPage(GROUP_ID);
         currentPage.pressCreateTopic()
                 .typeTopicText(TEXT)
@@ -64,15 +73,19 @@ public class GroupTests extends TestBase {
 
         PostCard post = currentPage.getPostWithText(TEXT);
         assertThat(post.getVideoTitle(), equalTo(title));
+        logger.info("Video post test successful");
 
         post.getPostPage()      // сброс
                 .deletePost();
+        logger.info("Test restored");
     }
 
     @Test
     public void geoTopicTest() {
         final String TEXT = getRandomString();
         final String PLACE = "SPBPU";
+
+        logger.info("Run creating post with {} text and {} geo position", TEXT, PLACE);
 
         GroupPage currentPage = new GroupPage().openGroupPage(GROUP_ID);
         currentPage.pressCreateTopic()
@@ -83,15 +96,19 @@ public class GroupTests extends TestBase {
         PostCard post = currentPage.getPostWithText(TEXT);
         assertTrue(post.hasPlaceMap());
         assertThat(post.getPostText(), equalTo(TEXT));
+        logger.info("Geo post test successful");
 
         post.getPostPage()      // сброс
                 .deletePost();
+        logger.info("Test restored");
     }
 
     @Test
     public void sendMusicTopicTest() {
         final String MUSIC = "Enter Sandman";
         final String TEXT = getRandomString();
+
+        logger.info("Run creating post with {} text and {} music", TEXT, MUSIC);
 
         GroupPage currentPage = new GroupPage().openGroupPage(GROUP_ID);
         currentPage.pressCreateTopic()
@@ -102,15 +119,19 @@ public class GroupTests extends TestBase {
         PostCard post = currentPage.getPostWithText(TEXT);
         assertThat(post.getPostText(), equalTo(TEXT));
         assertThat(post.getMusicNameOfPost(), equalTo(MUSIC));
+        logger.info("Music post test successful");
 
         post.getPostPage()      // сброс
                 .deletePost();
+        logger.info("Test restored");
     }
 
     @Test
     public void postCommentingTest() {
         final String POST = "стоимость техасской нефти";
         final String MESSAGE = getRandomString();
+
+        logger.info("Run commenting {} post with {} message test", POST, MESSAGE);
 
         GroupPage currentPage = new GroupPage().openGroupPage(GROUP_ID);
         PostCard currentPost = currentPage.getPostWithText(POST);
@@ -127,8 +148,10 @@ public class GroupTests extends TestBase {
 
         MessageCard message = messages.get(messages.size() - 1);
         assertThat(message.getText(), equalTo(MESSAGE));
+        logger.info("Commenting test successful");
 
         message.Remove(); // сброс
+        logger.info("Test restored");
     }
 
     @Test
@@ -136,6 +159,8 @@ public class GroupTests extends TestBase {
         final String PRODUCT_TITLE = getRandomString();
         final String PRODUCT_DESCRIPTION = getRandomString();
         final String PRODUCT_PRICE = getRandomNumber();
+
+        logger.info("Run creating product test with {} title, {} price, {} description", PRODUCT_TITLE, PRODUCT_PRICE, PRODUCT_DESCRIPTION);
 
         GroupProductsPage currentPage = new GroupPage()
                 .openGroupPage(GROUP_ID)
@@ -154,13 +179,17 @@ public class GroupTests extends TestBase {
         assertThat(product.getTitle(), equalTo(PRODUCT_TITLE));
         assertThat(product.getDescription(), equalTo(PRODUCT_DESCRIPTION));
         assertThat(parseInt(product.getPrice()), equalTo(parseInt(PRODUCT_PRICE)));
+        logger.info("Creating product test successful");
 
         product.deleteProduct(); // сброс
+        logger.info("Test restored");
     }
 
     @Test
     public void catalogCreatingTest() {
         final String CATALOG_NAME = getRandomString();
+
+        logger.info("Run creating catalog test with {} name", CATALOG_NAME);
 
         GroupProductsPage currentPage = new GroupPage()
                 .openGroupPage(GROUP_ID)
@@ -173,8 +202,10 @@ public class GroupTests extends TestBase {
         CatalogPage catalog = currentPage.clickOnCatalogWithName(CATALOG_NAME);
 
         assertThat(catalog.getCatalogName(), equalTo(CATALOG_NAME));
+        logger.info("Creating catalog test successful");
 
         catalog.deleteCatalog(); // сброс
+        logger.info("Test restored");
     }
 
     @Test
@@ -182,6 +213,8 @@ public class GroupTests extends TestBase {
         final String PRODUCT_TITLE = "Не пёсик";
         final String PRODUCT_CATALOG = "Пёсики";
         final String TARGET_CATALOG = "Котятки";
+
+        logger.info("Run test changing {} product catalog from {} to {}", PRODUCT_TITLE, PRODUCT_CATALOG, TARGET_CATALOG);
 
         GroupProductsPage currentPage = new GroupPage()
                 .openGroupPage(GROUP_ID)
@@ -196,11 +229,13 @@ public class GroupTests extends TestBase {
         ProductPage product = new ProductPage();
 
         assertThat(product.getCatalog(), equalTo(TARGET_CATALOG));
+        logger.info("Changing product catalog successful");
 
         product.editProduct()   // сброс
                 .deleteCatalog()
                 .typeCatalog(PRODUCT_CATALOG)
                 .clickShare();
+        logger.info("Test restored");
     }
 
     @After

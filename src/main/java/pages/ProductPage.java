@@ -1,6 +1,8 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.openqa.selenium.By.xpath;
 
@@ -15,21 +17,27 @@ public class ProductPage extends BasePage {
     private static final By CLOSE_LAYER = xpath(".//div[@class='media-layer_hld']//div[contains(@class,'layer_close_ico')]");
     private static final By PRODUCT_OPTIONS = xpath(".//div[@class='mlr_top_ac']");
 
+    private static final Logger logger = LoggerFactory.getLogger(ProductPage.class);
+
     public String getTitle() {
+        logger.info("Asked product title");
         waitUntilShows(PRODUCT_TITLE);
         return getText(PRODUCT_TITLE);
     }
     public String getDescription() {
+        logger.info("Asked product description");
         waitUntilShows(PRODUCT_DESCRIPTION);
         return getText(PRODUCT_DESCRIPTION);
     }
 
     public String getPrice() {
+        logger.info("Asked product price");
         waitUntilShows(PRODUCT_PRICE);
         return getText(PRODUCT_PRICE).replaceAll("\\D", "");
     }
 
     public String getCatalog() {
+        logger.info("Asked product catalog");
         waitUntilShows(PRODUCT_CATALOG);
         return getText(PRODUCT_CATALOG);
     }
@@ -39,8 +47,10 @@ public class ProductPage extends BasePage {
         click(PRODUCT_OPTIONS);
         waitUntilShows(DELETE_PRODUCT_BUTTON);
         click(DELETE_PRODUCT_BUTTON);
+        logger.info("Clicked delete product");
         waitUntilDisappear(DELETE_PRODUCT_BUTTON);
         click(CLOSE_LAYER);
+        logger.info("Product deleted");
         return this;
     }
 
@@ -50,6 +60,7 @@ public class ProductPage extends BasePage {
         waitUntilShows(EDIT_PRODUCT_BUTTON);
         click(EDIT_PRODUCT_BUTTON);
         waitUntilDisappear(EDIT_PRODUCT_BUTTON);
+        logger.info("Clicked edit product");
         return new NewProductPage();
     }
 }

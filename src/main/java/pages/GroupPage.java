@@ -2,6 +2,8 @@ package pages;
 
 import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.openqa.selenium.By.xpath;
 import static pages.NewTopicPage.CREATE_TOPIC_CARD;
@@ -20,6 +22,8 @@ public class GroupPage extends BasePage {
 
     public static final By CREATE_TOPIC_FIELD = xpath(".//*[@id='hook_Block_PostingForm']//*[@class='input_placeholder']");
     public static final By PRODUCTS_MENU = xpath(".//div[@class='mctc_navMenu __groups']//a[contains(@href, 'market')]");
+    
+    private static final Logger logger = LoggerFactory.getLogger(GroupPage.class);
 
     /**
      * opens test group page
@@ -28,39 +32,49 @@ public class GroupPage extends BasePage {
 
     public GroupPage openGroupPage(String groupID) {
         Selenide.open("/group/" + groupID);
+        logger.info("Opened {} group", groupID);
         return new GroupPage();
     }
 
     public PostCard getPostWithText(String text) {
-        return PostHelper.getPostWithText(text);
+        PostCard post = PostHelper.getPostWithText(text);
+        logger.info("Found post with {} text", text);
+        return post;
     }
 
     public NewTopicPage pressCreateTopic() {
         click(CREATE_TOPIC_FIELD);
         waitUntilShows(CREATE_TOPIC_CARD);
+        logger.info("Create new topic clicked");
         return new NewTopicPage();
     }
 
     public GroupProductsPage goToProducts() {
         click(PRODUCTS_MENU);
+        logger.info("Went to products menu");
         return new GroupProductsPage();
     }
 
     public GroupsPage deleteGroup() {
         hover(MORE_OPTIONS_BUTTON);
         click(MORE_OPTIONS_BUTTON);
+        logger.info("Opened options");
         waitUntilShows(MORE_OPTIONS_CARD);
         click(REMOVE_OPTION);
+        logger.info("Clicked remove option");
         waitUntilShows(GROUP_DELETE_CONFIRM_CARD);
         click(GROUP_DELETE_CONFIRM_BUTTON);
+        logger.info("Confirmed remove group");
         return new GroupsPage();
     }
 
     public String getGroupName() {
+        logger.info("Asked group name");
         return getText(GROUP_NAME);
     }
 
     public String getGroupDescription() {
+        logger.info("Asked group description");
         if (isElementDisplayed(GROUP_DESCRIPTION)) {
             return getText(GROUP_DESCRIPTION);
         } else {

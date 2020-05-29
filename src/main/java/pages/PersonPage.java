@@ -1,6 +1,8 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PersonPage extends BasePage {
     private static final By FRIENDSHIP_BUTTON = By.xpath(".//*[@data-l=\"t,invite\"]");
@@ -11,6 +13,8 @@ public class PersonPage extends BasePage {
     public static final By INVITE_FRIEANDS = By.xpath(".//li[@data-l='t,invite']//div[contains(@class, 'dropdown')]");
     public static final By GO_TO_FREAND_PAGE = By.xpath(".//*[@class=\"toolbar_nav\"]/*[@data-l=\"t,friends\"]");
 
+    private static final Logger logger = LoggerFactory.getLogger(PersonPage.class);
+
     /**
      * goes to Friends by navigation menu
      * @return new FriendsPage
@@ -19,6 +23,7 @@ public class PersonPage extends BasePage {
     public FriendsPage goToMenuFriends() {
         click(GO_TO_FREAND_PAGE);
         waitUntilShows(FriendsPage.FRIENDS_PAGE);
+        logger.info("Went to person friends page");
         return new FriendsPage();
     }
 
@@ -30,6 +35,7 @@ public class PersonPage extends BasePage {
     public PersonPage addToFriends() {
         click(FRIENDSHIP_BUTTON);
         waitUntilShows(REVOKED_FRIENDSHIP);
+        logger.info("Added to friends");
         return this;
     }
 
@@ -38,6 +44,7 @@ public class PersonPage extends BasePage {
      */
 
     public boolean isInvitedToFriends() {
+        logger.info("Asked if person is invited to friends");
         return isElementDisplayed(INVITE_FRIEANDS);
     }
 
@@ -51,6 +58,7 @@ public class PersonPage extends BasePage {
         waitUntilShows(REVOKED_FRIENDSHIP);
         click(REVOKED_FRIENDSHIP);
         waitUntilDisappear(REVOKED_FRIENDSHIP);
+        logger.info("Friendship invite is revoked");
         return this;
     }
 
@@ -62,6 +70,7 @@ public class PersonPage extends BasePage {
     public FriendsPage goToFriends() {
         click(FREAND_LIST);
         waitUntilShows(FriendsPage.FRIENDS_PAGE);
+        logger.info("Went to persons friends page");
         return new FriendsPage();
     }
 }

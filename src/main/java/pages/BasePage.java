@@ -91,7 +91,6 @@ public abstract class BasePage {
      */
 
     protected boolean isElementDisplayed(By locator) {
-        waitUntilShows(locator);
         return $(locator).isDisplayed();
     }
 

@@ -2,6 +2,8 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.openqa.selenium.By.xpath;
 
@@ -10,6 +12,8 @@ public class MessageCard extends BaseCard {
     private static final By TEXT = xpath(".//*[contains(@class, 'comment_text') and contains(@class, 'textWrap')]");
     private static final By REMOVE_BUTTON = xpath(".//*[contains(@class, 'comment_act')]//*[contains(@class, 'close')]");
     private static final By REMOVE_CONFIRM_BUTTON = xpath(".//input[@type = 'button']");
+
+    private static final Logger logger = LoggerFactory.getLogger(MessageCard.class);
 
     MessageCard(SelenideElement element) {
         super(element);
@@ -27,5 +31,6 @@ public class MessageCard extends BaseCard {
         hover();
         click(REMOVE_BUTTON);
         confirm(REMOVE_CONFIRM_BUTTON);
+        logger.info("Message removed");
     }
 }

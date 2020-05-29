@@ -2,6 +2,8 @@ package pages;
 
 import com.google.common.collect.ImmutableMap;
 import org.openqa.selenium.By;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -17,6 +19,7 @@ public class NewGroupPage extends BasePage {
     private static final By CREATE_GROUP_BUTTON = xpath(".//*[contains(@data-l, 'confirm')]");
     public static final By CREATE_GROUP_CARD = xpath(".//*[@class = 'modal-new_hld']");
 
+    private static final Logger logger = LoggerFactory.getLogger(NewGroupPage.class);
 
     public enum groupTypes {
         PUBLIC,
@@ -44,21 +47,25 @@ public class NewGroupPage extends BasePage {
         String typeString = GROUP_TYPES_STRINGS.get(type);
         By locator = xpath(format(GROUP_TYPE_WITH_DATA, typeString));
         click(locator);
+        logger.info("Chose {} group type", type);
         return this;
     }
 
     public NewGroupPage typeGroupName(String name) {
         type(GROUP_NAME_FIELD, name);
+        logger.info("Typed {} name", name);
         return this;
     }
 
     public NewGroupPage typeGroupDescription(String description) {
         type(GROUP_DESCRIPTION_FIELD, description);
+        logger.info("Typed {} ", description);
         return this;
     }
 
     public GroupPage create() {
         click(CREATE_GROUP_BUTTON);
+        logger.info("Clicked create");
         return new GroupPage();
     }
 }
